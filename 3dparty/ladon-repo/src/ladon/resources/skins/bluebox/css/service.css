@@ -1,0 +1,69 @@
+body { background-color: white; margin: 0px; padding: 0px; font-size: 12px; font-family: courier; }
+
+/* Service header */
+div.service-header { height: 22px; padding: 10px; background-color: #70803C; font-weight: bold; font-size: 20px; color: white; border-bottom: 1px solid #506020; border-top: 1px solid #506020; }
+div.service-header div.service-title {position: relative; float: left;}
+div.service-header form.skin-selector {position: relative; float: right; font-size: 12pt; margin-bottom: 0;}
+
+/* Service Description */
+div.service-description { margin: 10px 10px 0px; padding: 10px 10px 5px }
+div.service-description .title { padding: 5px; margin: -10px -10px -5px }
+div.service-description div.doc-lines { padding-top: 10px }
+
+div.service-interfaces { margin: 10px 10px 0px; padding: 10px 10px 5px }
+div.service-interfaces .title { padding: 5px; margin: -10px -10px -5px }
+div.service-interfaces ul.list { margin: 6px 0 0; margin-bottom: 0px; padding-left: 0px; padding-top: 10px;}
+div.service-interfaces ul.list li { list-style-type: none }
+
+/* API -> */
+/* Service Overview */
+div.service-api .overview { margin: 10px 10px 0px; padding: 10px 10px 5px; }
+div.service-api .overview .title { font-weight: bold; padding: 5px; margin: -10px -10px 0px }
+div.service-api .overview .subtitle { font-weight: bold; padding: 0px; margin: 10px 0 0 0 }
+div.service-api .overview .list { margin: 0px; padding-left: 0px; margin-top: 0px }
+div.service-api .overview .list li { padding-left: 0px; list-style-type: none }
+div.service-api .overview .list li .param-type { color: #68387f  }
+div.service-api .overview .list li .param-name { color: black; font-weight: bold }
+
+/* Service Methods */
+div.service-api .methods { margin: 10px 10px 0px; padding: 10px 10px 5px; }
+div.service-api .methods .title { font-weight: bold; padding: 5px; margin: -10px -10px -5px }
+div.service-api .methods .list { margin: 0px; padding-left: 0px }
+div.service-api .methods .list li { list-style-type: none }
+div.service-api .methods .entry { padding: 6px; margin-bottom: 6px; margin-top: 12px; background-color: #eee; border: 1px solid #aaa }
+div.service-api .methods .entry .declaration { font-size: 16px; font-family: courier; padding: 3px 0px 0px 6px; margin: -6px -6px 0px -6px; border-bottom: 1px solid #aaa; background-color: #ccc }
+div.service-api .methods .entry .declaration .name { color: #06287e; font-weight: bold; font-family: courier }
+div.service-api .methods .entry .param-type { color: #68387f }
+div.service-api .methods .entry .param-name { color: black; font-weight: bold }
+div.service-api .methods .entry .params-title { margin: 0px -6px 6px -6px; padding: 3px 6px 3px 6px; background-color: #ddd; font-weight: bold }
+div.service-api .methods .entry .params { padding-left: 10px; margin-left: 0px }
+div.service-api .methods .entry .params li { padding-bottom: 10px }
+div.service-api .methods .entry .return-type-title { margin: 0px -6px 6px -6px; padding: 3px 6px 3px 6px; background-color: #ddd; font-weight: bold }
+div.service-api .methods .entry .return-type { padding-left: 10px }
+
+/* Service Types */
+div.service-api .types { margin: 10px 10px 0px; padding: 10px 10px 5px }
+div.service-api .types .title { font-weight: bold; padding: 5px; margin: -10px -10px -5px }
+div.service-api .types .list { margin: 0px; padding-left: 0px }
+div.service-api .types .list li { list-style-type: none }
+div.service-api .types .entry { padding: 6px; margin-bottom: 6px; margin-top: 12px; background-color: #e5e5e5; border: 1px solid #bbb }
+div.service-api .types .entry .definition { font-size: 16px; font-family: courier; padding: 0px 0px 0px 6px; margin: -6px -6px 0px -6px; border-bottom: 1px solid #aaa; background-color: #ccc }
+div.service-api .types .entry .definition .name { color: #06287e; font-weight: bold; font-family: courier }
+div.service-api .types .entry .attributes-title { margin: 0px -6px 6px -6px; padding: 3px 6px 3px 6px; background-color: #ddd; font-weight: bold }
+div.service-api .types .entry .attributes { padding-left: 10px; margin-left: 0px }
+div.service-api .types .entry .attributes li { padding-bottom: 10px }
+div.service-api .types .entry .param-type { color: #68387f }
+div.service-api .types .entry .param-name { color: black; font-weight: bold }
+/* <- API */
+
+/* Service Footer */
+div.service-footer { text-align: center; font-style: italic; margin-top: 20px; }
+
+/* General doclines */
+div.doc-lines { margin-top: 4px; color: gray; margin-bottom: 4px }
+.title { color: white; font-size: 18px; font-weight: bold; border-bottom: 1px solid #406090; border-top: 1px solid #406090; background-color: #8098c6}
+
+a:link { color: #00732F; text-decoration: none }
+a:visited { color: #00732F; text-decoration: none }
+a:hover { color: #00732F; text-decoration: underline }
+

@@ -1,0 +1,15 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+	<soapenv:Body xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:rpc="http://example/rpc">
+		<rpc:op1>
+			<p1 href="#id1"/>
+		</rpc:op1>
+		<rpc:data id="id1">
+			<simple>text</simple>
+			<array href="#id2"/>
+		</rpc:data>
+		<soapenc:Array id="id2" soapenc:arrayType="xsd:string[]">
+			<Item>Array Element 0</Item>
+			<Item>Array Element 1</Item>
+		</soapenc:Array>
+	</soapenv:Body>
+</soapenv:Envelope>

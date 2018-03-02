@@ -1,0 +1,40 @@
+### Linux ###
+.*
+!.jshintrc
+*~
+
+### OS X ###
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+# Thumbnails
+._*
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+### Windows ###
+# Image file caches
+Thumbs.db
+ehthumbs.db
+# Folder config file
+Desktop.ini
+# Recycle Bin used on file shares
+$RECYCLE.BIN
+
+### Git ###
+.gitconfig
+!.gitignore
+!.gitkeep
+
+### C++ ###
+*.o
+*.so.*
+build/*
+GPATH
+GRTAGS
+GTAGS
+
+### Python ###
+*.pyc

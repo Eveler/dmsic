@@ -1,0 +1,42 @@
+dist: trusty
+sudo: false
+language: python
+notifications:
+  email: false
+
+python:
+- '2.7'
+- '3.4'
+- '3.5'
+addons:
+  apt:
+    packages:
+    - libssl-dev
+    - libxmlsec1
+    - libxmlsec1-dev
+    - libxmlsec1-openssl
+    - libxslt1-dev
+    - pkg-config
+before_install:
+- echo "${TRAVIS_TAG:-1.0.1.dev}" >version.txt
+install:
+- travis_retry pip install -r requirements-test.txt
+- travis_retry pip install -e "."
+- pip list
+script: py.test -v tests
+
+before_deploy:
+    - travis_retry pip install Sphinx
+    - python setup.py build_sphinx
+
+deploy:
+  skip_cleanup: true
+  skip_upload_docs: false
+  provider: pypi
+  user: mehcode
+  on:
+    tags: true
+    distributions: sdist bdist_wheel
+    python: '2.7'
+  password:
+    secure: Gq9Ut9FATKUSVoaTTSeecN8kWxRQjTe4K+gK/gKuRJqWzYPOG9AhCq2Nxd3rwlWedPWpfoQwmlCuCma68npVQZnsJqyNYmEUBp4xjgDXOR12q2jDlgT0SH5V23ysJydA+c5QuHGXz7INxBTSwCjD+xBe2WXRxp9RJoi8kLloFt0=

@@ -1,0 +1,495 @@
+--493f4e46b6690ac551db9d306e7c5458
+Content-Type: application/json, charset=iso-8859-1
+Content-ID: dwezvfqrweverg0
+
+{"methodname":"recieveAttachment","args":{"incomming":{"a":1,"b":["#dwezvfqrweverg1"]}}}
+--493f4e46b6690ac551db9d306e7c5458
+Content-Type: text/plain
+Content-ID: dwezvfqrweverg1
+
+<?xml version="1.0" ?>
+<definitions name="ShopService" targetNamespace="urn:ShopService" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="urn:ShopService" xmlns:tns="urn:ShopService" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<types>
+		<schema targetNamespace="urn:ShopService" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="urn:ShopService" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+			<complexType name="Product">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="product-desc" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="1" name="product-id" type="xsd:long"/>
+					<element maxOccurs="1" minOccurs="1" name="product-name" type="xsd:string"/>
+				</sequence>
+			</complexType>
+			<complexType name="ArrayOfProduct">
+				<complexContent>
+					<restriction base="SOAP-ENC:Array">
+						<sequence>
+							<element maxOccurs="unbounded" minOccurs="0" name="item" type="ns1:Product"/>
+						</sequence>
+						<attribute WSDL:arrayType="ns1:Product[]" ref="SOAP-ENC:arrayType"/>
+					</restriction>
+				</complexContent>
+			</complexType>
+			<complexType name="CommonResult">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="res-code" type="xsd:long"/>
+					<element maxOccurs="1" minOccurs="1" name="res-details" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="1" name="res-msg" type="xsd:string"/>
+				</sequence>
+			</complexType>
+			<complexType name="ListProductsResponse">
+				<sequence>
+					<element maxOccurs="1" minOccurs="0" name="products" nillable="true" type="ns1:ArrayOfProduct"/>
+					<element maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+				</sequence>
+			</complexType>
+			<complexType name="PriceCalcResponse">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="d-unit-discount" type="xsd:decimal"/>
+					<element maxOccurs="1" minOccurs="1" name="q-unit-discount" type="xsd:decimal"/>
+					<element maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+					<element maxOccurs="1" minOccurs="1" name="sub-total" type="xsd:decimal"/>
+					<element maxOccurs="1" minOccurs="1" name="total-discount" type="xsd:decimal"/>
+					<element maxOccurs="1" minOccurs="1" name="total-price" type="xsd:decimal"/>
+					<element maxOccurs="1" minOccurs="1" name="unit-price" type="xsd:decimal"/>
+				</sequence>
+			</complexType>
+			<complexType name="CreateCompanyResponse">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="company-id" type="xsd:long"/>
+					<element maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+				</sequence>
+			</complexType>
+			<complexType name="CreateCustomerResponse">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="customer-id" type="xsd:long"/>
+					<element maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+				</sequence>
+			</complexType>
+			<complexType name="Customer">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="company-id" type="xsd:long"/>
+					<element maxOccurs="1" minOccurs="1" name="customer-id" type="xsd:long"/>
+					<element maxOccurs="1" minOccurs="1" name="given-name" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="1" name="login" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="1" name="mail" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="1" name="phone-number" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="1" name="surname" type="xsd:string"/>
+				</sequence>
+			</complexType>
+			<complexType name="AuthenticateCustomerResponse">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="customer" type="ns1:Customer"/>
+					<element maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+					<element maxOccurs="1" minOccurs="1" name="session-id" type="xsd:string"/>
+				</sequence>
+			</complexType>
+			<complexType name="CreateDomainResponse">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="domain-id" type="xsd:long"/>
+					<element maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+				</sequence>
+			</complexType>
+			<complexType name="AddDomainUserResponse">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="domain-user-id" type="xsd:long"/>
+					<element maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+				</sequence>
+			</complexType>
+			<complexType name="RemoveDomainUserResponse">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="domain-user-id" type="xsd:long"/>
+					<element maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+				</sequence>
+			</complexType>
+			<complexType name="ModifyDomainUserResponse">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="domain-user-id" type="xsd:long"/>
+					<element maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+				</sequence>
+			</complexType>
+			<complexType name="KeyValue">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="key" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="1" name="value" type="xsd:string"/>
+				</sequence>
+			</complexType>
+			<complexType name="ArrayOfKeyValue">
+				<complexContent>
+					<restriction base="SOAP-ENC:Array">
+						<sequence>
+							<element maxOccurs="unbounded" minOccurs="0" name="item" type="ns1:KeyValue"/>
+						</sequence>
+						<attribute WSDL:arrayType="ns1:KeyValue[]" ref="SOAP-ENC:arrayType"/>
+					</restriction>
+				</complexContent>
+			</complexType>
+			<complexType name="Domain">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="admin-mail" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="1" name="common-name" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="1" name="company-id" type="xsd:long"/>
+					<element maxOccurs="1" minOccurs="1" name="domain-id" type="xsd:long"/>
+					<element maxOccurs="1" minOccurs="1" name="domain-name" type="xsd:string"/>
+				</sequence>
+			</complexType>
+			<complexType name="ArrayOfDomain">
+				<complexContent>
+					<restriction base="SOAP-ENC:Array">
+						<sequence>
+							<element maxOccurs="unbounded" minOccurs="0" name="item" type="ns1:Domain"/>
+						</sequence>
+						<attribute WSDL:arrayType="ns1:Domain[]" ref="SOAP-ENC:arrayType"/>
+					</restriction>
+				</complexContent>
+			</complexType>
+			<complexType name="ListDomainsResponse">
+				<sequence>
+					<element maxOccurs="1" minOccurs="0" name="domains" nillable="true" type="ns1:ArrayOfDomain"/>
+					<element maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+				</sequence>
+			</complexType>
+			<complexType name="DomainUser">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="domain-id" type="xsd:long"/>
+					<element maxOccurs="1" minOccurs="1" name="domain-name" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="1" name="domain-user-id" type="xsd:long"/>
+					<element maxOccurs="1" minOccurs="1" name="given-name" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="1" name="status" type="xsd:long"/>
+					<element maxOccurs="1" minOccurs="1" name="surname" type="xsd:string"/>
+					<element maxOccurs="1" minOccurs="1" name="username" type="xsd:string"/>
+				</sequence>
+			</complexType>
+			<complexType name="ArrayOfDomainUser">
+				<complexContent>
+					<restriction base="SOAP-ENC:Array">
+						<sequence>
+							<element maxOccurs="unbounded" minOccurs="0" name="item" type="ns1:DomainUser"/>
+						</sequence>
+						<attribute WSDL:arrayType="ns1:DomainUser[]" ref="SOAP-ENC:arrayType"/>
+					</restriction>
+				</complexContent>
+			</complexType>
+			<complexType name="ListDomainUsersResponse">
+				<sequence>
+					<element maxOccurs="1" minOccurs="0" name="domain-users" nillable="true" type="ns1:ArrayOfDomainUser"/>
+					<element maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+				</sequence>
+			</complexType>
+		</schema>
+	</types>
+	<message name="addDomainUser">
+		<part name="session-id" type="xsd:string"/>
+		<part name="domain-id" type="xsd:long"/>
+		<part name="username" type="xsd:string"/>
+		<part name="password" type="xsd:string"/>
+		<part name="given-name" type="xsd:string"/>
+		<part name="surname" type="xsd:string"/>
+	</message>
+	<message name="addDomainUserResponse">
+		<part maxOccurs="1" minOccurs="1" name="domain-user-id" type="xsd:long"/>
+		<part maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+	</message>
+	<message name="createCompany">
+		<part name="admin-fingerprint" type="xsd:string"/>
+		<part name="company-code" type="xsd:string"/>
+		<part name="name" type="xsd:string"/>
+		<part name="street1" type="xsd:string"/>
+		<part name="street2" type="xsd:string"/>
+		<part name="postalcode" type="xsd:string"/>
+		<part name="city" type="xsd:string"/>
+		<part name="telephone" type="xsd:string"/>
+		<part name="mobile" type="xsd:string"/>
+		<part name="fax" type="xsd:string"/>
+		<part name="www" type="xsd:string"/>
+		<part name="email" type="xsd:string"/>
+	</message>
+	<message name="createCompanyResponse">
+		<part maxOccurs="1" minOccurs="1" name="company-id" type="xsd:long"/>
+		<part maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+	</message>
+	<message name="listDomains">
+		<part name="session-id" type="xsd:string"/>
+		<part name="company-id" type="xsd:long"/>
+	</message>
+	<message name="listDomainsResponse">
+		<part maxOccurs="1" minOccurs="0" name="domains" nillable="true" type="ns1:ArrayOfDomain"/>
+		<part maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+	</message>
+	<message name="listDomainUsers">
+		<part name="session-id" type="xsd:string"/>
+		<part name="domain-id" type="xsd:long"/>
+	</message>
+	<message name="listDomainUsersResponse">
+		<part maxOccurs="1" minOccurs="0" name="domain-users" nillable="true" type="ns1:ArrayOfDomainUser"/>
+		<part maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+	</message>
+	<message name="priceCalc">
+		<part name="product-id" type="xsd:long"/>
+		<part name="quantity" type="xsd:long"/>
+		<part name="duration" type="xsd:long"/>
+	</message>
+	<message name="priceCalcResponse">
+		<part maxOccurs="1" minOccurs="1" name="d-unit-discount" type="xsd:decimal"/>
+		<part maxOccurs="1" minOccurs="1" name="q-unit-discount" type="xsd:decimal"/>
+		<part maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+		<part maxOccurs="1" minOccurs="1" name="sub-total" type="xsd:decimal"/>
+		<part maxOccurs="1" minOccurs="1" name="total-discount" type="xsd:decimal"/>
+		<part maxOccurs="1" minOccurs="1" name="total-price" type="xsd:decimal"/>
+		<part maxOccurs="1" minOccurs="1" name="unit-price" type="xsd:decimal"/>
+	</message>
+	<message name="removeDomainUser">
+		<part name="session-id" type="xsd:string"/>
+		<part name="domain-user-id" type="xsd:long"/>
+	</message>
+	<message name="removeDomainUserResponse">
+		<part maxOccurs="1" minOccurs="1" name="domain-user-id" type="xsd:long"/>
+		<part maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+	</message>
+	<message name="createCustomer">
+		<part name="admin-fingerprint" type="xsd:string"/>
+		<part name="company-id" type="xsd:long"/>
+		<part name="login" type="xsd:string"/>
+		<part name="password" type="xsd:string"/>
+		<part name="contact-given-name" type="xsd:string"/>
+		<part name="contact-surname" type="xsd:string"/>
+		<part name="contact-phone" type="xsd:string"/>
+		<part name="contact-email" type="xsd:string"/>
+	</message>
+	<message name="createCustomerResponse">
+		<part maxOccurs="1" minOccurs="1" name="customer-id" type="xsd:long"/>
+		<part maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+	</message>
+	<message name="modifyDomainUser">
+		<part name="session-id" type="xsd:string"/>
+		<part name="domain-user-id" type="xsd:long"/>
+		<part name="mod-attr" type="ns1:ArrayOfKeyValue"/>
+	</message>
+	<message name="modifyDomainUserResponse">
+		<part maxOccurs="1" minOccurs="1" name="domain-user-id" type="xsd:long"/>
+		<part maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+	</message>
+	<message name="listProducts">
+		<part name="lang" type="xsd:string"/>
+	</message>
+	<message name="listProductsResponse">
+		<part maxOccurs="1" minOccurs="0" name="products" nillable="true" type="ns1:ArrayOfProduct"/>
+		<part maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+	</message>
+	<message name="createDomain">
+		<part name="session-id" type="xsd:string"/>
+		<part name="company-id" type="xsd:long"/>
+		<part name="domain-name" type="xsd:string"/>
+		<part name="common-name" type="xsd:string"/>
+		<part name="admin-mail" type="xsd:string"/>
+	</message>
+	<message name="createDomainResponse">
+		<part maxOccurs="1" minOccurs="1" name="domain-id" type="xsd:long"/>
+		<part maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+	</message>
+	<message name="authenticateCustomer">
+		<part name="login" type="xsd:string"/>
+		<part name="password" type="xsd:string"/>
+	</message>
+	<message name="authenticateCustomerResponse">
+		<part maxOccurs="1" minOccurs="1" name="customer" type="ns1:Customer"/>
+		<part maxOccurs="1" minOccurs="1" name="result" type="ns1:CommonResult"/>
+		<part maxOccurs="1" minOccurs="1" name="session-id" type="xsd:string"/>
+	</message>
+	<portType name="ShopServicePortType">
+		<operation name="addDomainUser">
+			<documentation>
+				None
+			</documentation>
+			<input message="tns:addDomainUser"/>
+			<output message="tns:addDomainUserResponse"/>
+		</operation>
+		<operation name="createCompany">
+			<documentation>
+				None
+			</documentation>
+			<input message="tns:createCompany"/>
+			<output message="tns:createCompanyResponse"/>
+		</operation>
+		<operation name="listDomains">
+			<documentation>
+				None
+			</documentation>
+			<input message="tns:listDomains"/>
+			<output message="tns:listDomainsResponse"/>
+		</operation>
+		<operation name="listDomainUsers">
+			<documentation>
+				None
+			</documentation>
+			<input message="tns:listDomainUsers"/>
+			<output message="tns:listDomainUsersResponse"/>
+		</operation>
+		<operation name="priceCalc">
+			<documentation>
+				None
+			</documentation>
+			<input message="tns:priceCalc"/>
+			<output message="tns:priceCalcResponse"/>
+		</operation>
+		<operation name="removeDomainUser">
+			<documentation>
+				None
+			</documentation>
+			<input message="tns:removeDomainUser"/>
+			<output message="tns:removeDomainUserResponse"/>
+		</operation>
+		<operation name="createCustomer">
+			<documentation>
+				None
+			</documentation>
+			<input message="tns:createCustomer"/>
+			<output message="tns:createCustomerResponse"/>
+		</operation>
+		<operation name="modifyDomainUser">
+			<documentation>
+				Modify domain user information through this method. Modifications are controlled
+through the mod_attr which is an array of key/value pairs.
+modifyDomainUser accepts the following mod_attr keys:
+
+        given_name: string
+        surname: string
+        password: string
+			</documentation>
+			<input message="tns:modifyDomainUser"/>
+			<output message="tns:modifyDomainUserResponse"/>
+		</operation>
+		<operation name="listProducts">
+			<documentation>
+				None
+			</documentation>
+			<input message="tns:listProducts"/>
+			<output message="tns:listProductsResponse"/>
+		</operation>
+		<operation name="createDomain">
+			<documentation>
+				None
+			</documentation>
+			<input message="tns:createDomain"/>
+			<output message="tns:createDomainResponse"/>
+		</operation>
+		<operation name="authenticateCustomer">
+			<documentation>
+				None
+			</documentation>
+			<input message="tns:authenticateCustomer"/>
+			<output message="tns:authenticateCustomerResponse"/>
+		</operation>
+	</portType>
+	<binding name="ShopService" type="tns:ShopServicePortType">
+		<SOAP:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="addDomainUser">
+			<SOAP:operation soapAction="" style="rpc"/>
+			<input>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</input>
+			<output>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</output>
+		</operation>
+		<operation name="createCompany">
+			<SOAP:operation soapAction="" style="rpc"/>
+			<input>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</input>
+			<output>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</output>
+		</operation>
+		<operation name="listDomains">
+			<SOAP:operation soapAction="" style="rpc"/>
+			<input>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</input>
+			<output>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</output>
+		</operation>
+		<operation name="listDomainUsers">
+			<SOAP:operation soapAction="" style="rpc"/>
+			<input>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</input>
+			<output>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</output>
+		</operation>
+		<operation name="priceCalc">
+			<SOAP:operation soapAction="" style="rpc"/>
+			<input>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</input>
+			<output>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</output>
+		</operation>
+		<operation name="removeDomainUser">
+			<SOAP:operation soapAction="" style="rpc"/>
+			<input>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</input>
+			<output>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</output>
+		</operation>
+		<operation name="createCustomer">
+			<SOAP:operation soapAction="" style="rpc"/>
+			<input>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</input>
+			<output>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</output>
+		</operation>
+		<operation name="modifyDomainUser">
+			<SOAP:operation soapAction="" style="rpc"/>
+			<input>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</input>
+			<output>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</output>
+		</operation>
+		<operation name="listProducts">
+			<SOAP:operation soapAction="" style="rpc"/>
+			<input>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</input>
+			<output>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</output>
+		</operation>
+		<operation name="createDomain">
+			<SOAP:operation soapAction="" style="rpc"/>
+			<input>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</input>
+			<output>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</output>
+		</operation>
+		<operation name="authenticateCustomer">
+			<SOAP:operation soapAction="" style="rpc"/>
+			<input>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</input>
+			<output>
+				<SOAP:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ShopService" use="encoded"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="ShopService">
+		<documentation>
+			None
+		</documentation>
+		<port binding="tns:ShopService" name="ShopService">
+			<SOAP:address location="https://service.limbosoft.com:443/ShopService/soap"/>
+		</port>
+	</service>
+</definitions>
+
+--493f4e46b6690ac551db9d306e7c5458--

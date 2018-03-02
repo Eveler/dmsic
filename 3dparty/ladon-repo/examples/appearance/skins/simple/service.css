@@ -1,0 +1,23 @@
+	body { background-color: white; margin: 0px; padding: 0px; font-size: 12px; font-family: arial,sans-serif; }
+	div.serviceName { height: 22px; padding: 10px; background-color: #70803C; font-size: 20px; color: white; }
+	div.title {position: relative; float:left}
+	form.skin-selector {position:relative; float: right; font-size: 12pt; margin-bottom: 0;}
+	div.serviceDesc { padding: 20px 20px 10px; }
+	span.descriptionHead { font-weight: bold; }
+	span.interfaceHead { padding-left: 20px; font-weight: bold; }
+	span.methodsHead { padding-left: 20px; font-weight: bold; }
+	span.typesHead { padding-left: 20px; font-weight: bold; }
+	div.methodDef { font-size: 16px; font-family: courier }
+	div.typeDef { font-size: 16px; font-family: courier }
+	span.methodName { color: darkred; font-weight: bold; font-family: courier }
+	span.typeName { color: darkred; font-weight: bold; font-family: courier }
+	span.paramType { color: blue  }
+	span.paramName { color: black; font-weight: bold }
+	li.paramDesc { padding-bottom: 10px }
+	li.methodEntry { padding-bottom: 15px }
+	li.typeAttrib { padding-bottom: 10px }
+	div.docLines { margin-top: 4px; color: green; margin-bottom: 4px }
+	ul.interfaceList {  }
+	ul.interfaceList li { padding-bottom: 10px; }
+	div.catGen { text-align: center; font-style: italic; margin-top: 20px; }
+

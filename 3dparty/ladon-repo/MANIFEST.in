@@ -1,0 +1,5 @@
+recursive-include examples *.py *.css *.h *.template *.pickle *.jpg
+recursive-include docs/html *.html *.css *.js *.inv *.gif *.jpg *.eot *.woff *.ttf *.svg *.txt
+recursive-include src/ladon/resources *.template *.css *.js *.gif *.jpg *.eot *.woff *.ttf *.svg *.txt
+prune examples/services/upload
+prune examples/download

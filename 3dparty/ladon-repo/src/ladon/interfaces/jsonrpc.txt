@@ -1,0 +1,40 @@
+json_rpc = {
+	'methodname': 'addUser', 
+	'args': {
+		'username': 'jakob',
+		'given_name': 'Jakob',
+		'surname': 'Simon-Gaarde',
+		'groups': ['group1','group2'],
+		'opt_attr': [
+			[{'key':'mobile', 'value':'2354324'}],
+			[{'key':'mail', 'value':'jakob@test.org']
+		] 
+	}
+}
+
+json_rpc_desc = {
+	'services': {
+		'MyService': {
+			'types': {
+				'UserAttribute': {
+					'key': 'string',
+					'value': 'string'
+				}
+			},
+			'methods': {
+				'addUser': {
+					'params': {
+					'username': 'string',
+					'given_name': 'string',
+					'surname': 'string',
+					'groups': ['string'],
+					'opt_attr': ['UserAttribute']
+					}
+				}
+			}
+		}
+	}
+}
+
+
+json_rpc_desc = {'services': {'MyService': {'types': {'UserAttribute': {'key': 'string','value': 'string'}},'methods': {'addUser': {'params': {'username': 'string','given_name': 'string','surname': 'string','groups': ['string'],'opt_attr':['UserAttribute']}}}}}}

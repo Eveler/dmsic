@@ -1,0 +1,27 @@
+=== modified file 'frameworks/python/src/ladon/interfaces/soap.py'
+--- frameworks/python/src/ladon/interfaces/soap.py	2011-08-30 16:34:40 +0000
++++ frameworks/python/src/ladon/interfaces/soap.py	2011-09-17 10:57:54 +0000
+@@ -175,18 +175,18 @@
+ 				for k,v in type_dict[m._rtype]['attributes']:
+ 					part = doc.createElement('part')
+ 					part.setAttribute('name',k.replace('_','-'))
+-					part.setAttribute('maxOccurs','1')
++					#part.setAttribute('maxOccurs','1')
+ 					if isinstance(v, list):
+ 						inner = v[0]
+ 						part.setAttribute('type','ns%d:ArrayOf%s' % (servicenumber,inner.__name__))
+-						part.setAttribute('minOccurs','0')
+-						part.setAttribute('nillable','true')
++						#part.setAttribute('minOccurs','0')
++						#part.setAttribute('nillable','true')
+ 					else:
+ 						if v in type_dict:
+ 							part.setAttribute('type','ns%d:%s' % (servicenumber,v.__name__))
+ 						else:
+ 							part.setAttribute('type','xsd:%s' % map_type(v))
+-						part.setAttribute('minOccurs','1')
++						#part.setAttribute('minOccurs','1')
+ 					message.appendChild(part)
+ 			else:
+ 				part = doc.createElement('part')
+

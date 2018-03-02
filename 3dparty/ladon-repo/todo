@@ -1,0 +1,10 @@
+* Support for generators throughout Ladon's response mechanism, maybe later to include the request mechanism
+* Eliminate exec() in jsonwsp.py
+* Support for task type service methods with progress polling built-in
+* Thourough unit-testing
+* Add FaultActor to SOAPFaultHandler
+* Ability to send back void-results
+* Support for enumerations (SimpleType in WSDL)
+* Support for lists in dictionary type-definitions.
+* Support for name convertion in dictionary type-definitions (to make it possible to use python kewords as arguments)
+* New skins

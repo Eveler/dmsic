@@ -1,0 +1,11 @@
+=== modified file 'frameworks/python/src/ladon/types/typeconverter.py'
+--- frameworks/python/src/ladon/types/typeconverter.py	2011-07-11 09:37:30 +0000
++++ frameworks/python/src/ladon/types/typeconverter.py	2011-11-01 10:14:05 +0000
+@@ -74,4 +74,6 @@
+ 		if self.only_strings_to_unicode:
+ 			return val
+ 		else:
++			if expected_typ==bool:
++				return PORTABLE_STRING(val).lower()
+ 			return PORTABLE_STRING(val)
+

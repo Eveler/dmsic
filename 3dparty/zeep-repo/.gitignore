@@ -1,0 +1,22 @@
+*.egg-info
+*.pyc
+__pycache__
+.tox
+.coverage
+.coverage.*
+.eggs
+.cache
+.python-version
+.venv
+.idea/
+/build/
+/dist/
+/test_clients/
+/docs/_build/
+/frutsels/
+/server/
+/htmlcov/
+
+
+# Editors
+.idea/

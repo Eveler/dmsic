@@ -1,0 +1,119 @@
+#!<INTERPRETER>
+# -*- coding: utf-8 -*-
+
+from os.path import abspath,dirname,basename
+from optparse import OptionParser
+try:
+	from SocketServer import ThreadingMixIn
+except ImportError:
+	from socketserver import ThreadingMixIn
+import sys
+
+commands = {
+	'testserve': {
+		'desc': 'Create a simple server to test one or more ladon modules',
+		'options': {
+			'-p': {
+				'help': 'Make the service listen on a specific port (default: 8888)',
+				'metavar': 'PORT',
+				'dest': 'port',
+				'type': str,
+				'default': None
+			},
+			'-v': {
+				'help': 'Enable verbose server',
+				'metavar': 'VERBOSE',
+				'dest': 'verbose',
+				'type': bool,
+				'default': False
+			},
+			'-m': {
+				'help': 'Run multithreaded',
+				'metavar': 'MULTITHREADED',
+				'dest': 'mt',
+				'type': bool,
+				'default': False
+			}
+		},
+		'args': ['modules...']
+	}
+}
+
+def parse_cmd_string():
+	global commands
+	if len(sys.argv)<2 or sys.argv[1] not in commands:
+		print("Usage %s: <command> [OPTIONS] [ARGS]" % basename(sys.argv[0]))
+		print("Commands:")
+		for command,cmdinfo in commands.items():
+			print("  %-15.15s: %s" % (command,cmdinfo['desc']))
+		sys.exit(1)
+
+	cmd = sys.argv[1]
+	options = commands[cmd]['options']
+	args = commands[cmd]['args']
+	parser = OptionParser(usage="%s %s [OPTIONS] %s\n\n%s" % (basename(sys.argv[0]),cmd," ".join(args),commands[cmd]['desc']))
+	for opt,optinfo in options.items():
+		if optinfo['type']==str:
+			parser.add_option(
+				opt,dest=optinfo['dest'],
+				help=optinfo['help'],
+				default=optinfo['default'],
+				metavar=optinfo['metavar'])
+		elif optinfo['type']==bool:
+			parser.add_option(
+				opt,
+				action="store_%s" % str(not optinfo['default']).lower(),
+				dest=optinfo['dest'],
+				help=optinfo['help'],
+				default=optinfo['default'],
+				metavar=optinfo['metavar'])
+	(options,args) = parser.parse_args()
+	kwargs = {}
+	for opt,optinfo in commands[cmd]['options'].items():
+		kwargs[optinfo['dest']] = eval("options.%s" % optinfo['dest'])
+	return cmd,args[1:],kwargs
+
+def serve(*script_list,**kw):
+	print('The serve subcommand has been renamed to "testserve"')
+
+def testserve(*script_list,**kw):
+	print("")
+	print("WARNING:")
+	print("-----------------------------------------------------------------------------")
+	print("The testserve command is NOT meant to be used in production environments.")
+	print("Ladon should only be used in production using a Web Server with WSGI support.")
+	print("Read about how to setup Ladon with Apache2 at:")
+	print("http://ladonize.org/index.php/Python_Configuration")
+	print("-----------------------------------------------------------------------------")
+	print("")
+	print("Options: %s" % str(kw))
+	print("Modules: %s" % ",".join(script_list))
+	from ladon.server.wsgi import LadonWSGIApplication
+	import wsgiref.simple_server
+
+	scripts = []
+	path_list = {}
+	for s in script_list:
+		parts = s.split('.py')
+		scripts += [basename(parts[0])]
+		path_list[dirname(abspath(parts[0]))] = 1
+	path_list = list(path_list.keys())
+
+	application = LadonWSGIApplication(scripts,path_list)
+	
+	class ThreadingWSGIServer(ThreadingMixIn, wsgiref.simple_server.WSGIServer): 
+		pass
+
+	port = 8888
+	args = ('',port , application)
+	if kw['port']:
+		port = int(kw['port'])
+	if kw['mt']:
+		args = ('',port , application, ThreadingWSGIServer)
+	server = wsgiref.simple_server.make_server(*args)
+	server.serve_forever()
+
+
+if __name__=='__main__':
+	cmd,args,kwargs = parse_cmd_string()
+	exec("%s(*args,**kwargs)" % cmd.replace('-','_'))

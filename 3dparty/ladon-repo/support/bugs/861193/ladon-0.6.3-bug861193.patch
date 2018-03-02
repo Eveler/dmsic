@@ -1,0 +1,13 @@
+=== modified file 'frameworks/python/src/ladon/interfaces/soap.py'
+--- frameworks/python/src/ladon/interfaces/soap.py	2011-09-17 10:59:23 +0000
++++ frameworks/python/src/ladon/interfaces/soap.py	2011-09-28 07:48:29 +0000
+@@ -105,7 +105,7 @@
+ 				
+ 			else:
+ 				complextype = doc.createElement('complexType')
+-				complextype.setAttribute('name',typ['name'].replace('_','-'))
++				complextype.setAttribute('name',typ['name'])
+ 				schema.appendChild(complextype)
+ 				sequence = doc.createElement('sequence')
+ 				complextype.appendChild(sequence)
+

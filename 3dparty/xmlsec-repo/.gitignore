@@ -1,0 +1,14 @@
+# Dot files
+.*
+!.editorconfig
+!.travis*
+!.appveyor*
+!.git*
+
+# Python
+/dist
+/build
+*.pyc
+*.pyo
+*.egg*
+*.so

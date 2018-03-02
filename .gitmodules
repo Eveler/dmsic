@@ -1,0 +1,63 @@
+[submodule "3dparty/idna-repo"]
+	path = 3dparty/idna-repo
+	url = https://github.com/kjd/idna.git
+[submodule "3dparty/jinja2-repo"]
+	path = 3dparty/jinja2-repo
+	url = https://github.com/pallets/jinja.git
+[submodule "3dparty/ladon-repo"]
+	path = 3dparty/ladon-repo
+	url = https://bitbucket.org/jakobsg/ladon.git
+[submodule "3dparty/markupsafe-repo"]
+	path = 3dparty/markupsafe-repo
+	url = https://github.com/pallets/markupsafe.git
+[submodule "3dparty/requests-repo"]
+	path = 3dparty/requests-repo
+	url = https://github.com/requests/requests.git
+[submodule "3dparty/six-repo"]
+	path = 3dparty/six-repo
+	url = https://github.com/benjaminp/six.git
+[submodule "3dparty/soapfish-repo"]
+	path = 3dparty/soapfish-repo
+	url = https://github.com/soapteam/soapfish.git
+[submodule "3dparty/spyne-repo"]
+	path = 3dparty/spyne-repo
+	url = https://github.com/arskom/spyne.git
+[submodule "3dparty/urllib3-repo"]
+	path = 3dparty/urllib3-repo
+	url = https://github.com/shazow/urllib3.git
+[submodule "3dparty/zeep-repo"]
+	path = 3dparty/zeep-repo
+	url = https://github.com/mvantellingen/python-zeep.git
+[submodule "3dparty/defusedxml"]
+	path = 3dparty/defusedxml
+	url = https://github.com/tiran/defusedxml.git
+[submodule "3dparty/cached-property"]
+	path = 3dparty/cached-property
+	url = https://github.com/pydanny/cached-property.git
+[submodule "3dparty/isodate"]
+	path = 3dparty/isodate
+	url = https://github.com/gweis/isodate.git
+[submodule "3dparty/pytz"]
+	path = 3dparty/pytz
+	url = https://git.launchpad.net/pytz
+[submodule "3dparty/requests_toolbelt-repo"]
+	path = 3dparty/requests_toolbelt-repo
+	url = https://github.com/requests/toolbelt.git
+[submodule "3dparty/lxml-repo"]
+	path = 3dparty/lxml-repo
+	url = https://git.launchpad.net/lxml
+[submodule "3dparty/sqlalchemy"]
+	path = 3dparty/sqlalchemy
+	url = https://bitbucket.org/zzzeek/sqlalchemy.git
+[submodule "3dparty/twisted"]
+	path = 3dparty/twisted
+	url = https://github.com/twisted/twisted.git
+[submodule "3dparty/incremental"]
+	path = 3dparty/incremental
+	url = https://github.com/twisted/incremental.git
+[submodule "3dparty/zope.interface"]
+	path = 3dparty/zope.interface
+	url = https://github.com/zopefoundation/zope.interface.git
+[submodule "3dparty/constantly"]
+	path = 3dparty/constantly
+	url = https://github.com/twisted/constantly.git

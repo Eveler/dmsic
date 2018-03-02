@@ -1,0 +1,13 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+	<soapenv:Body xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:rpc="http://example/rpc">
+		<rpc:op1>
+			<p1>
+				<simple>text</simple>
+				<array>
+					<Item>Array Element 0</Item>
+					<Item>Array Element 1</Item>
+				</array>
+			</p1>
+		</rpc:op1>
+	</soapenv:Body>
+</soapenv:Envelope>

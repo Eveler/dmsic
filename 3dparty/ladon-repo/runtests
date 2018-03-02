@@ -1,0 +1,3 @@
+cd tests
+python2 testladon.py
+python3 testladon.py

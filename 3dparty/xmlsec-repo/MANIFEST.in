@@ -1,0 +1,6 @@
+include src/*
+include requirements*.txt
+include LICENSE
+include version.txt
+include xmlsec_setupinfo.py
+include xmlsec_extra.py

@@ -1,0 +1,14 @@
+.project
+.pydevproject
+.settings
+*.pyc
+build
+dist
+*.egg-info
+.eggs
+.*.sw?
+.coverage
+.tox/
+docs/_build
+docs/_static
+docs/_templates

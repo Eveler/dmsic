@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1052.3622"
+   height="744.09448"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.2 r9819"
+   sodipodi:docname="ladon_flow.svg"
+   inkscape:export-filename="/home/jakob/ladon-dev/docs/source/images/ladon_flow.png"
+   inkscape:export-xdpi="150"
+   inkscape:export-ydpi="150">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient5199">
+      <stop
+         id="stop5201"
+         offset="0"
+         style="stop-color:#00008f;stop-opacity:0.37654322;" />
+      <stop
+         id="stop5203"
+         offset="1"
+         style="stop-color:#c0f2d9;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4559">
+      <stop
+         id="stop4561"
+         offset="0"
+         style="stop-color:#ff6000;stop-opacity:1;" />
+      <stop
+         id="stop4563"
+         offset="1"
+         style="stop-color:#ffff6e;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4545">
+      <stop
+         style="stop-color:#3dc6ff;stop-opacity:1;"
+         offset="0"
+         id="stop4547" />
+      <stop
+         style="stop-color:#c0f2d9;stop-opacity:1;"
+         offset="1"
+         id="stop4549" />
+    </linearGradient>
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="TriangleOutL"
+       style="overflow:visible">
+      <path
+         id="path3999"
+         d="m 5.77,0 -8.65,5 0,-10 8.65,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.8,0.8)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lend"
+       style="overflow:visible">
+      <path
+         id="path3877"
+         style="font-size:12px;fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <linearGradient
+       id="linearGradient3775">
+      <stop
+         style="stop-color:#00bb00;stop-opacity:1;"
+         offset="0"
+         id="stop3777" />
+      <stop
+         style="stop-color:#c5ffc2;stop-opacity:1;"
+         offset="1"
+         id="stop3779" />
+    </linearGradient>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective2985" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3775"
+       id="linearGradient3781"
+       x1="33.79974"
+       y1="359.39755"
+       x2="258.49005"
+       y2="359.39755"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.72362489,0,0,0.72362485,228.92162,301.79688)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3775"
+       id="linearGradient3789"
+       gradientUnits="userSpaceOnUse"
+       x1="33.79974"
+       y1="359.39755"
+       x2="258.49005"
+       y2="359.39755"
+       gradientTransform="matrix(0.72362484,0,0,0.72362485,228.92162,563.52577)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3775"
+       id="linearGradient4519"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(318.68971,276.00001)"
+       x1="33.79974"
+       y1="359.39755"
+       x2="258.49005"
+       y2="359.39755" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3775"
+       id="linearGradient4521"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(320.68971,137.99998)"
+       x1="33.79974"
+       y1="359.39755"
+       x2="258.49005"
+       y2="359.39755" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3775"
+       id="linearGradient4523"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(318.68971,-85.999991)"
+       x1="33.79974"
+       y1="359.39755"
+       x2="258.49005"
+       y2="359.39755" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4545"
+       id="linearGradient4551"
+       x1="145.46196"
+       y1="159.38734"
+       x2="145.46196"
+       y2="690.7276"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.79404129,0,0,0.72362485,218.50003,364.02861)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4545"
+       id="linearGradient4555"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.74506563,0,0,0.72362485,510.22434,364.02861)"
+       x1="145.46196"
+       y1="159.38734"
+       x2="145.46196"
+       y2="690.7276" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4559"
+       id="linearGradient5138"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.77210482,0,0,0.19010438,198.77459,264.75706)"
+       x1="145.46196"
+       y1="159.38734"
+       x2="145.46196"
+       y2="690.7276" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5199"
+       id="linearGradient5197"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.79404122,0,0,0.72362485,218.5,364.04438)"
+       x1="145.46196"
+       y1="159.38734"
+       x2="145.46196"
+       y2="690.7276" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5199"
+       id="linearGradient5207"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.74192975,0,0,0.72362485,510.65869,364.04438)"
+       x1="145.46196"
+       y1="159.38734"
+       x2="145.46196"
+       y2="690.7276" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3775"
+       id="linearGradient3109"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.72362483,0,0,0.72362485,228.92162,563.52577)"
+       x1="33.79974"
+       y1="359.39755"
+       x2="258.49005"
+       y2="359.39755" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.66658202"
+     inkscape:cx="526.18109"
+     inkscape:cy="432.05486"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="709"
+     inkscape:window-x="-8"
+     inkscape:window-y="35"
+     inkscape:window-maximized="1"
+     inkscape:snap-global="false" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-308.2677)">
+    <rect
+       style="fill:#000000;fill-opacity:0.34597156;stroke:none"
+       id="rect5156"
+       width="203.2101"
+       height="397.6485"
+       x="585.23291"
+       y="482.65396"
+       ry="4.1349993"
+       rx="4.1349993"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       rx="4.1349993"
+       ry="4.1349993"
+       y="482.65396"
+       x="247.55324"
+       height="397.6485"
+       width="203.2101"
+       id="rect5148"
+       style="fill:#000000;fill-opacity:0.34597156;stroke:none"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:url(#linearGradient4551);fill-opacity:1;stroke:#000000;stroke-width:1.17020464;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect4543"
+       width="223.35236"
+       height="397.6485"
+       x="219.73643"
+       y="474.9794"
+       ry="4.1349993"
+       rx="4.4068065"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:url(#linearGradient3781);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.78947473;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3001"
+       width="185.96825"
+       height="50.651169"
+       x="243.17772"
+       y="536.79871"
+       ry="4.1349993"
+       rx="4.1349993"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:15.43754292px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="273.92538"
+       y="566.16089"
+       id="text3003"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan3005"
+         x="273.92538"
+         y="566.16089">parse_request()</tspan></text>
+    <rect
+       ry="4.1349993"
+       y="798.52765"
+       x="244.53464"
+       height="50.651169"
+       width="180.54056"
+       id="rect3783"
+       style="fill:url(#linearGradient3789);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.78947473;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       rx="4.1349993"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text3785"
+       y="828.12061"
+       x="270.81976"
+       style="font-size:15.43754292px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="828.12061"
+         x="270.81976"
+         id="tspan3787"
+         sodipodi:role="line">build_response()</tspan></text>
+    <rect
+       rx="4.1349993"
+       ry="4.1349993"
+       y="474.9794"
+       x="576.58875"
+       height="397.6485"
+       width="203.2101"
+       id="rect4553"
+       style="fill:url(#linearGradient4555);fill-opacity:1;stroke:#000000;stroke-width:1.1335417;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       id="g4514"
+       transform="matrix(0.72362487,0,0,0.72362487,291.40712,364.02863)"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         style="fill:url(#linearGradient4523);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.09099996;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         id="rect3791"
+         width="223.24226"
+         height="69.996452"
+         x="434.70233"
+         y="238.7565"
+         ry="5.7142859"
+         rx="5.7142859" />
+      <text
+         xml:space="preserve"
+         style="font-size:21.3336277px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         x="452.20789"
+         y="279.34335"
+         id="text3793"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan3795"
+           x="452.20789"
+           y="279.34335">call_method()</tspan></text>
+    </g>
+    <g
+       transform="matrix(1.2394509,0,0,1.1335417,262.55068,308.85207)"
+       id="g5140"
+       style="fill:#000000;fill-opacity:0.34597156;stroke:none"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:connector-curvature="0"
+         style="fill:#000000;fill-opacity:0.34597156;stroke:none"
+         d="m 444.875,153.3125 c -2.02091,0 -3.625,1.63534 -3.625,3.65625 l 0,136.9375 -182.90625,0 c -2.37392,0 -4.3125,1.63534 -4.3125,3.65625 l 0,97.15625 c 0,2.02091 1.93858,3.65625 4.3125,3.65625 l 182.90625,0 0,102.09375 c 0,2.02091 1.60409,3.65625 3.625,3.65625 l 172,0 c 2.02091,0 3.625,-1.63534 3.625,-3.65625 l 0,-343.5 c 0,-2.02091 -1.60409,-3.65625 -3.625,-3.65625 l -172,0 z"
+         id="path5142" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path5144"
+         d="m 440.68308,193.26655 c 179.30477,0 179.30477,0 179.30477,0"
+         style="fill:#000000;fill-opacity:0.34597156;stroke:none;stroke-width:0.97705609;marker-end:none" />
+    </g>
+    <g
+       id="g5132"
+       transform="matrix(1.2394509,0,0,1.1335417,254.87614,301.17753)"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         id="rect4557"
+         d="m 444.875,153.3125 c -2.02091,0 -3.625,1.63534 -3.625,3.65625 l 0,136.9375 -182.90625,0 c -2.37392,0 -4.3125,1.63534 -4.3125,3.65625 l 0,97.15625 c 0,2.02091 1.93858,3.65625 4.3125,3.65625 l 182.90625,0 0,102.09375 c 0,2.02091 1.60409,3.65625 3.625,3.65625 l 172,0 c 2.02091,0 3.625,-1.63534 3.625,-3.65625 l 0,-343.5 c 0,-2.02091 -1.60409,-3.65625 -3.625,-3.65625 l -172,0 z"
+         style="fill:url(#linearGradient5138);fill-opacity:1;stroke:#000000;stroke-width:0.97293055;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.97705609;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:none"
+         d="m 440.68308,193.26655 c 179.30477,0 179.30477,0 179.30477,0"
+         id="path5130"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       id="g4509"
+       transform="matrix(0.72362487,0,0,0.72362487,291.40712,332.91276)"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         ry="5.7142859"
+         y="462.75647"
+         x="436.70233"
+         height="69.996452"
+         width="223.24226"
+         id="rect3799"
+         style="fill:url(#linearGradient4521);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.09099996;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         rx="5.7142859" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3801"
+         y="503.34332"
+         x="451.44745"
+         style="font-size:21.3336277px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           y="503.34332"
+           x="451.44745"
+           id="tspan3803"
+           sodipodi:role="line">method()</tspan></text>
+    </g>
+    <g
+       id="g4504"
+       transform="matrix(0.72362487,0,0,0.72362487,291.40712,364.02863)"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         style="fill:url(#linearGradient4519);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.09099996;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         id="rect3807"
+         width="223.24226"
+         height="69.996452"
+         x="434.70233"
+         y="600.75647"
+         ry="5.7142859"
+         rx="5.7142859" />
+      <text
+         xml:space="preserve"
+         style="font-size:21.3336277px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         x="451.44745"
+         y="641.34332"
+         id="text3809"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan3811"
+           x="451.44745"
+           y="641.34332">build_result_dict()</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.80906212;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutL)"
+       d="m 430.95629,563.32783 c 157.54219,0 157.54219,0 157.54219,0"
+       id="path3851"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4502"
+       d="m 598.94863,825.28002 c -165.03367,0 -165.03367,0 -165.03367,0"
+       style="fill:none;stroke:#000000;stroke-width:1.809062;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutL)"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.80906212;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutL)"
+       d="m 686.71827,724.88466 c 0,58.70899 0,58.70899 0,58.70899"
+       id="path4527"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4529"
+       d="m 686.71827,594.63219 c 0,58.70898 0,58.70898 0,58.70898"
+       style="fill:none;stroke:#000000;stroke-width:1.80906212;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutL)"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text4535"
+       y="554.43268"
+       x="476.35349"
+       style="font-size:16.78269386px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="554.43268"
+         x="476.35349"
+         id="tspan4537"
+         sodipodi:role="line">req_dict</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16.78269386px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="477.80069"
+       y="816.38489"
+       id="text4539"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4541"
+         x="477.80069"
+         y="816.38489">res_dict</tspan></text>
+    <g
+       id="g5174"
+       transform="matrix(1.2790897,0,0,1.2790897,6.9545202,308.76674)"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         ry="3.6270072"
+         rx="6.014451"
+         y="165.21933"
+         x="11.428571"
+         height="65.714287"
+         width="114.28571"
+         id="rect5158"
+         style="fill:#000000;fill-opacity:0.34597156;stroke:#000000;stroke-opacity:1" />
+      <text
+         transform="scale(1.0490049,0.95328439)"
+         sodipodi:linespacing="125%"
+         id="text5160"
+         y="202.01855"
+         x="64.475876"
+         style="font-size:17.74001884px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           y="202.01855"
+           x="64.475876"
+           id="tspan5162"
+           sodipodi:role="line">HTTP</tspan><tspan
+           id="tspan5164"
+           y="224.19357"
+           x="64.475876"
+           sodipodi:role="line">REQUEST</tspan></text>
+    </g>
+    <g
+       id="g5180"
+       transform="matrix(1.2790897,0,0,1.2790897,6.9545202,278.86321)"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         style="fill:#000000;fill-opacity:0.34597156;stroke:#000000;stroke-opacity:1"
+         id="rect5166"
+         width="114.28571"
+         height="65.714287"
+         x="11.428571"
+         y="393.21933"
+         rx="6.014451"
+         ry="3.6270072" />
+      <text
+         xml:space="preserve"
+         style="font-size:17.74001884px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         x="64.475876"
+         y="441.19272"
+         id="text5168"
+         sodipodi:linespacing="125%"
+         transform="scale(1.0490049,0.95328439)"><tspan
+           sodipodi:role="line"
+           id="tspan5170"
+           x="64.475876"
+           y="441.19272">HTTP</tspan><tspan
+           sodipodi:role="line"
+           x="64.475876"
+           y="463.36774"
+           id="tspan5172">RESPONSE</tspan></text>
+    </g>
+    <path
+       inkscape:connector-curvature="0"
+       id="path5186"
+       d="m 173.4701,563.32783 c 60.02669,0 60.02669,0 60.02669,0"
+       style="fill:none;stroke:#000000;stroke-width:1.80906212;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutL)"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.80906212;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutL)"
+       d="m 237.01515,824.26213 c -55.19442,0 -55.19442,0 -55.19442,0"
+       id="path5188"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:url(#linearGradient5197);fill-opacity:1;stroke:#000000;stroke-width:1.17020464;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 224.26827,474.97943 c -2.51785,0 -4.53462,1.86625 -4.53462,4.15704 l 0,38.13286 223.35048,0 0,-38.13286 c 0,-2.29079 -2.01677,-4.15704 -4.53462,-4.15704 l -214.28124,0 z"
+       id="rect5190"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path5205"
+       d="m 581.09716,474.97943 c -2.28114,0 -4.10831,1.86625 -4.10831,4.15704 l 0,38.13286 202.35304,0 0,-38.13286 c 0,-2.29079 -1.82715,-4.15704 -4.10831,-4.15704 l -194.13642,0 z"
+       style="fill:url(#linearGradient5207);fill-opacity:1;stroke:#000000;stroke-width:1.17020464;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text5213"
+       y="507.56592"
+       x="592.59827"
+       style="font-size:31.57994843px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="507.56592"
+         x="592.59827"
+         id="tspan5215"
+         sodipodi:role="line">Dispatcher</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:31.57994843px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="262.59311"
+       y="507.56592"
+       id="text5217"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan5219"
+         x="262.59311"
+         y="507.56592">Interface</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.25110626px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="292.97913"
+       y="629.43652"
+       id="text5221"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         x="292.97913"
+         y="629.43652"
+         id="tspan5229">SOAP</tspan><tspan
+         sodipodi:role="line"
+         x="292.97913"
+         y="651.00043"
+         id="tspan3101">JSONWSP</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:31.57994843px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="810.04346"
+       y="507.56592"
+       id="text5231"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan5233"
+         x="810.04346"
+         y="507.56592">User Service</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.25110626px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="835.26227"
+       y="675.1333"
+       id="text5221-1"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         x="835.26227"
+         y="675.1333"
+         id="tspan3091">MailboxService</tspan><tspan
+         sodipodi:role="line"
+         x="835.26227"
+         y="696.6972"
+         id="tspan3095">CalendarService</tspan><tspan
+         sodipodi:role="line"
+         x="835.26227"
+         y="718.26105"
+         id="tspan3097">UserService</tspan><tspan
+         sodipodi:role="line"
+         x="835.26227"
+         y="739.82495"
+         id="tspan3099">...</tspan></text>
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       rx="4.1349993"
+       style="fill:url(#linearGradient3109);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.78947473;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3103"
+       width="180.54054"
+       height="50.651169"
+       x="243.80037"
+       y="721.78229"
+       ry="4.1349993" />
+    <text
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       xml:space="preserve"
+       style="font-size:15.43754292px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="247.79616"
+       y="751.37518"
+       id="text3105"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3107"
+         x="247.79616"
+         y="751.37518">build_fault_response()</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.66281652;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutL)"
+       d="m 601.97617,696.79488 -98.49419,0 0,50.20609 -68.68672,0"
+       id="path3115"
+       inkscape:connector-curvature="0" />
+    <text
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/jakob/dev/ladon/trunk/docs/source/images/rect5156.png"
+       xml:space="preserve"
+       style="font-size:16.78269386px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="471.23712"
+       y="687.45807"
+       id="text4265"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4267"
+         x="471.23712"
+         y="687.45807">Exception</tspan></text>
+    <path
+       inkscape:connector-curvature="0"
+       id="path4269"
+       d="m 238.7147,747.95847 -33.46389,0 0,50.20609 -23.33666,0"
+       style="fill:none;stroke:#000000;stroke-width:1.66281652;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutL)" />
+  </g>
+</svg>
