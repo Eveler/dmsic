@@ -8,7 +8,7 @@ setup(
     version=__version__,
     description='Directum SMEV integration system',
     license='GPL',
-    scripts=['dmsis.py', 'db.py', 'declar.py', 'smev.py', 'six.py',
+    scripts=['dmsic.py', 'db.py', 'declar.py', 'smev.py', 'six.py',
              'cached_property.py'],
     packages=find_packages(),
     # packages=findall(),
@@ -18,5 +18,5 @@ setup(
     },
     include_package_data=True,
     entry_points={'console_scripts': ['dmsis = dmsis:main']},
-    install_requires=['setuptools', 'win32core', 'win32compat', 'win32ext']
+    install_requires=['setuptools', 'PyQt5']
 )

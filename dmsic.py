@@ -1,26 +1,16 @@
 # -*- encoding: utf-8 -*-
 
-# Twisted reactor sends GetRequest by timer
-# Got requests stored in DB
-
-# Then it queries Directum for changed status for stored requests and sends
-# SendResponse if status changed
 import logging
 import os
 from tempfile import mkstemp
 
-from win32._service import SERVICE_STOP_PENDING
-from win32serviceutil import ServiceFramework, HandleCommandLine
-
 from db import Db
-from plugins.directum import IntegrationServices
 from smev import Adapter
-from twisted.internet import task, reactor
-from twisted.python import log
 
 
 class Integration:
-    def __init__(self, use_config=True, config_path='./dmsis.ini'):
+    def __init__(self, ui=None, use_config=True,
+                 config_path='./dmsic.ini'):
         logging.basicConfig(
             format='%(asctime)s %(name)s:%(module)s(%(lineno)d): '
                    '%(levelname)s: %(message)s', level=logging.INFO)
@@ -36,32 +26,15 @@ class Integration:
             self.cert_method = 'sharp'
             self.mail_server, self.ftp_user, self.ftp_pass = None, None, None
 
+        self.ui = ui
+
         try:
             self.__smev = Adapter(self.smev_wsdl, self.smev_ftp,
                                   method=self.cert_method)
         except Exception:
             self.report_error()
 
-        try:
-            self.__directum = IntegrationServices(self.directum_wsdl)
-        except Exception:
-            self.report_error()
-
         self.db = Db()
-
-    @property
-    def directum(self):
-        if not self.__directum:
-            try:
-                self.__directum = IntegrationServices(self.directum_wsdl)
-            except Exception:
-                self.report_error()
-
-        return self.__directum
-
-    @directum.setter
-    def directum(self, value):
-        self.__directum = value
 
     @property
     def smev(self):
@@ -77,10 +50,6 @@ class Integration:
     @smev.setter
     def smev(self, value):
         self.__smev = value
-
-    def run(self):
-        lc = task.LoopingCall(self.step)
-        lc.start(self.repeat_every)
 
     def step(self):
         """
@@ -233,13 +202,13 @@ class Integration:
         try:
             from os.path import expanduser
             lst = cfg.read(
-                ["c:/dmsis/dmsis.ini", expanduser("~/dmsis.ini"), "./dmsis.ini",
+                ["c:/dmsis/dmsic.ini", expanduser("~/dmsic.ini"), "./dmsic.ini",
                  config_path])
             if lst:
                 logging.info('Configuration loaded from: %s' % lst)
             else:
                 logging.warning('No config files found. Using default')
-                lst = [os.path.abspath("./dmsis.ini")]
+                lst = [os.path.abspath("./dmsic.ini")]
                 logging.info('Configuration stored in: %s' % lst)
 
             if not cfg.has_section("main"):
@@ -273,11 +242,11 @@ class Integration:
             logging.root.setLevel(loglevel)
             if 'mail_addr' not in cfg.options('main'):
                 do_write = True
-                cfg.set('main', 'mail_addr', 'ioib@adm-ussuriisk.ru')
+                cfg.set('main', 'mail_addr', '')
             self.mail_addr = cfg.get('main', 'mail_addr')
             if 'mail_server' not in cfg.options('main'):
                 do_write = True
-                cfg.set('main', 'mail_server', '192.168.1.6')
+                cfg.set('main', 'mail_server', '')
             self.mail_server = cfg.get('main', 'mail_server')
 
             if not cfg.has_section("smev"):
@@ -328,24 +297,6 @@ class Integration:
             else:
                 self.ftp_pass = None
 
-            if not cfg.has_section("directum"):
-                do_write = True
-                cfg.add_section('directum')
-            if 'wsdl' not in cfg.options('directum'):
-                do_write = True
-                cfg.set(
-                    'directum', 'wsdl',
-                    "http://servdir1:8083/IntegrationService.svc?singleWsdl")
-            self.directum_wsdl = cfg.get('directum', 'wsdl')
-
-            if not cfg.has_section("integration"):
-                do_write = True
-                cfg.add_section('integration')
-            if 'repeat_every' not in cfg.options('integration'):
-                do_write = True
-                cfg.set('integration', 'repeat_every', '10')
-            self.repeat_every = cfg.getint('integration', 'repeat_every')
-
             if do_write:
                 for fn in lst:
                     with open(fn, "w") as configfile:
@@ -373,6 +324,9 @@ class Integration:
             value, trace)
         logging.error(msg)
 
+        if self.ui:
+            self.ui.report_error(msg)
+
         if self.mail_server:
             import smtplib
             from email.mime.text import MIMEText
@@ -394,48 +348,10 @@ class Integration:
                 logging.error(msg)
 
 
-class Service(ServiceFramework):
-    _svc_name_ = 'dmsis'
-    _svc_display_name_ = 'Directum SMEV integration system'
-
-    def SvcStop(self):
-        self.ReportServiceStatus(SERVICE_STOP_PENDING)
-        log.msg('Stopping dmsis...')
-        reactor.callFromThread(reactor.stop)
-
-    def SvcDoRun(self):
-        #
-        # ... Initialize application here
-        #
-        log.msg('dmsis running...')
-        run()
-
-
-def run():
-    a = Integration()
-    a.run()
-    reactor.run(installSignalHandlers=0)
-
-
 def main():
-    # Ensure basic thread support is enabled for twisted
-    from twisted.python import threadable
-
-    threadable.init(1)
-
-    from optparse import OptionParser
-
-    parser = OptionParser(version="%prog ver. 1.0",
-                          conflict_handler="resolve")
-    parser.print_version()
-    parser.add_option("-r", "--run", action="store_true", dest="run",
-                      help="Just run program. Don`t work as win32service")
-    # parser.add_option("--startup")
-    (options, args) = parser.parse_args()
-    if options.run:
-        run()
-    else:
-        HandleCommandLine(Service)
+    from qtui import Ui
+    ui = Ui()
+    ui.exec()
 
 
 if __name__ == '__main__':
