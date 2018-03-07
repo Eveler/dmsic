@@ -173,7 +173,7 @@ class Emails(Base):
 
 
 class Db:
-    def __init__(self, dbstr='sqlite:///dmsis.db'):
+    def __init__(self, dbstr='sqlite:///dmsic.db'):
         self.log = logging.getLogger('db')
         self.engine = create_engine(dbstr,
                                     echo=(logging.root.level == logging.DEBUG))
