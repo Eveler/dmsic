@@ -51,6 +51,12 @@ class Integration:
     def smev(self, value):
         self.__smev = value
 
+    def send(self, declar):
+        try:
+            self.smev.send_request(declar)
+        except:
+            self.report_error()
+
     def step(self):
         """
         Sends GetRequest. Then queries Directum for changed status for stored
@@ -320,8 +326,7 @@ class Integration:
         from traceback import format_exception
         etype, value, tb = exc_info()
         trace = ''.join(format_exception(etype, value, tb))
-        msg = ("%s" + "\n" + "*" * 70 + "\n%s\n" + "*" * 70) % (
-            value, trace)
+        msg = ("*" * 70 + "\n%s\n" + "*" * 70) % trace
         logging.error(msg)
 
         if self.ui:

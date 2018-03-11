@@ -7,10 +7,10 @@ from os import close, write
 from urllib.parse import urlparse
 from uuid import uuid1
 
-from declar import Declar, AppliedDocument
+from declar import Declar
 from lxml import etree, objectify
 from plugins.cryptopro import Crypto
-from zeep import Client, xsd
+from zeep import Client
 from zeep.plugins import HistoryPlugin
 
 
@@ -249,6 +249,73 @@ class Adapter:
 
         return declar, uuid, reply_to, files
 
+    def send_request(self, declar):
+        operation = 'SendRequest'
+        file_names = []
+
+        element = self.proxy.get_element('ns1:MessagePrimaryContent')
+        rr = etree.Element(
+            '{urn://augo/smev/uslugi/1.0.0}declar',
+            nsmap={'rr': 'urn://augo/smev/uslugi/1.0.0'})
+        for k, v in declar.items():
+            if isinstance(v, list):
+                for val in v:
+                    se = etree.SubElement(
+                        rr, '{urn://augo/smev/uslugi/1.0.0}%s' % k)
+                    for n, m in val.items():
+                        if not m:
+                            continue
+                        if n == 'file_name':
+                            file_names.append(m)
+                        else:
+                            etree.SubElement(
+                                se,
+                                '{urn://augo/smev/uslugi/1.0.0}%s' % n).text = m
+            elif isinstance(v, dict):
+                se = etree.SubElement(
+                    rr, '{urn://augo/smev/uslugi/1.0.0}%s' % k)
+                for n, m in v.items():
+                    if not m:
+                        continue
+                    etree.SubElement(
+                        se, '{urn://augo/smev/uslugi/1.0.0}%s' % n).text = m
+            else:
+                if not v:
+                    continue
+                etree.SubElement(
+                    rr, '{urn://augo/smev/uslugi/1.0.0}%s' % k).text = v
+        mpc = element(rr)
+
+        node = self.proxy.create_message(
+            self.proxy.service, operation,
+            {'MessageID': uuid1(), 'MessagePrimaryContent': mpc},
+            CallerInformationSystemSignature=etree.Element('Signature'))
+        res = node.find('.//{*}SenderProvidedRequestData')
+        res.set('Id', 'SIGNED_BY_CALLER')
+
+        if False:
+            rahl = etree.SubElement(res, 'RefAttachmentHeaderList')
+            for uuid, file in files:
+                rah = etree.SubElement(rahl, 'RefAttachmentHeader')
+                etree.SubElement(rah, 'uuid').text = uuid
+                etree.SubElement(
+                    rah, 'Hash').text = self.crypto.get_file_hash(
+                    file['full_name'])
+                etree.SubElement(rah, 'MimeType').text = file['type']
+
+        node_str = etree.tostring(node)
+        # res = etree.QName(res)
+        # node_str = node_str.replace(
+        #     b'<ns0:SenderProvidedResponseData',
+        #     b'<ns0:SenderProvidedResponseData xmlns:ns0="' +
+        #     res.namespace.encode() + b'"')
+        self.log.debug(node_str)
+        res = self.__xml_part(node_str,
+                              b'ns0:SenderProvidedRequestData')
+        res = self.__call_sign(res)
+        res = node_str.decode().replace('<Signature/>', res)
+        self.log.debug(res)
+
     def send_respose(self, reply_to, declar_number, register_date,
                      result='FINAL', text='', applied_documents=list(),
                      ftp_user='', ftp_pass=''):
@@ -358,7 +425,8 @@ class Adapter:
         method = getattr(self.crypto, method_name)
         return method(xml)
 
-    def __upload_file(self, file, file_name, ftp_user='anonymous', ftp_pass='anonymous'):
+    def __upload_file(self, file, file_name, ftp_user='anonymous',
+                      ftp_pass='anonymous'):
         addr = urlparse(self.ftp_addr).netloc
         with ftplib.FTP(addr, ftp_user, ftp_pass) as con:
             uuid = str(uuid1())
@@ -461,10 +529,11 @@ if __name__ == '__main__':
                                   gen_xml_only=True))
     else:
         try:
-            res = a.send_respose(reply_to='eyJzaWQiOjMyNzg1LCJtaWQiOiIwOTlmNjlkMy1lYmE2LTExZTctYTIyZS1hNDVkMzZjNzcwNmYiLCJ0Y2QiOiJmMDIxM2E4My1lYmE1LTExZTctOTc4NC1mYTE2M2UxMDA3Yjl8MTExMTExMTExMTExMTExMTExMTF8VjhoUXFvLzlYMVBDckJkV010RHQ2UlUyNGdQdEdZQzlPTjlEM2d4TWQzZGdWK1ErUFo3L2o3SUJKMG5WY1BBNnZ5T1ZrczRuNHl5ZWhEQytFclYydkRSYXBVKzJMcWJtNmNHQlVGR0lRbyt2Kzl3TnpnMVlFOFI5Tnh6MmNxWmlFTzN3TUNYQlplbXNJaUVUajlNNm5JKzVaOHU4VXNnTFpyb1NoMkN1WlR3L244MS9wYU00cFMxcXlXaWE3TWRYUUJLN1gwcUpwcG80VGl0cnJOcFFqR3phUXNPUFFDSThIT3Vnc2o1QmRSNUUveTdIM1ZwZUlhQ1ZjTG5LeEtQbm5hQllyandGYzRrQUZVcW1zM3JTWjdaWitXeWNCQlpZOTZOS0hpbE10eVNYQW9PeE1Qa1dsQXA1b1hScDhhQXNoRzNIQitOV0lsVm9CRFpiaW1MTnZBPT0iLCJyaWQiOiJkMGFjYmY2Yy0xNDMzLTExZTUtOWFkZi00YWIyM2QwN2NlMzkiLCJlb2wiOjAsInNsYyI6ImF1Z29fc21ldl91c2x1Z2lfMS4wLjBfZGVjbGFyIiwibW5tIjoibXRfdGVzdCJ9',
-                                 declar_number='23156/564/5611Д',
-                                 register_date='2008-09-29',
-                                 text='В услуге отказано по причине отсутствия документов удостоверяющих личность и заявления')
+            res = a.send_respose(
+                reply_to='eyJzaWQiOjMyNzg1LCJtaWQiOiIwOTlmNjlkMy1lYmE2LTExZTctYTIyZS1hNDVkMzZjNzcwNmYiLCJ0Y2QiOiJmMDIxM2E4My1lYmE1LTExZTctOTc4NC1mYTE2M2UxMDA3Yjl8MTExMTExMTExMTExMTExMTExMTF8VjhoUXFvLzlYMVBDckJkV010RHQ2UlUyNGdQdEdZQzlPTjlEM2d4TWQzZGdWK1ErUFo3L2o3SUJKMG5WY1BBNnZ5T1ZrczRuNHl5ZWhEQytFclYydkRSYXBVKzJMcWJtNmNHQlVGR0lRbyt2Kzl3TnpnMVlFOFI5Tnh6MmNxWmlFTzN3TUNYQlplbXNJaUVUajlNNm5JKzVaOHU4VXNnTFpyb1NoMkN1WlR3L244MS9wYU00cFMxcXlXaWE3TWRYUUJLN1gwcUpwcG80VGl0cnJOcFFqR3phUXNPUFFDSThIT3Vnc2o1QmRSNUUveTdIM1ZwZUlhQ1ZjTG5LeEtQbm5hQllyandGYzRrQUZVcW1zM3JTWjdaWitXeWNCQlpZOTZOS0hpbE10eVNYQW9PeE1Qa1dsQXA1b1hScDhhQXNoRzNIQitOV0lsVm9CRFpiaW1MTnZBPT0iLCJyaWQiOiJkMGFjYmY2Yy0xNDMzLTExZTUtOWFkZi00YWIyM2QwN2NlMzkiLCJlb2wiOjAsInNsYyI6ImF1Z29fc21ldl91c2x1Z2lfMS4wLjBfZGVjbGFyIiwibW5tIjoibXRfdGVzdCJ9',
+                declar_number='23156/564/5611Д',
+                register_date='2008-09-29',
+                text='В услуге отказано по причине отсутствия документов удостоверяющих личность и заявления')
             logging.debug(res)
             res = a.get_request(
                 # node_id='099f69d3-eba6-11e7-a22e-a45d36c7706f',
