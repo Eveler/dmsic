@@ -4,7 +4,7 @@ import logging
 import os
 from tempfile import mkstemp
 
-from db import Db
+# from db import Db
 from smev import Adapter
 
 
@@ -34,7 +34,7 @@ class Integration:
         except Exception:
             self.report_error()
 
-        self.db = Db()
+        # self.db = Db()
 
     @property
     def smev(self):
@@ -57,144 +57,144 @@ class Integration:
         except:
             self.report_error()
 
-    def step(self):
-        """
-        Sends GetRequest. Then queries Directum for changed status for stored
-        requests and sends SendResponse if status changed
-        """
-        # Send to DIRECTUM previously saved declars
-        try:
-            for declar, files, reply_to, uuid in self.db.all_declars_as_xsd():
-                res = self.directum.add_declar(declar, files=files)
-                self.db.add_update(uuid, declar.declar_number,
-                                   reply_to, directum_id=res)
-                logging.info('Добавлено/обновлено дело с ID = %s' % res)
-                self.directum.run_script('СтартЗадачПоМУ')
-                self.db.delete_declar(uuid)
-        except Exception:
-            self.report_error()
-
-        try:
-            declar, uuid, reply_to, files = self.smev.get_request(
-                self.smev_uri,
-                self.local_name)
-            if declar:
-                try:
-                    res = self.directum.add_declar(declar, files=files)
-                    self.db.add_update(uuid, declar.declar_number, reply_to,
-                                       directum_id=res)
-                    logging.info('Добавлено/обновлено дело с ID = %s' % res)
-                    self.directum.run_script('СтартЗадачПоМУ')
-                except Exception:
-                    logging.warning(
-                        'Failed to send data to DIRECTUM. Saving locally.',
-                        exc_info=True)
-                    self.db.save_declar(declar, uuid, reply_to, files)
-        except Exception as e:
-            self.report_error()
-
-        # Send final response
-        try:
-            for request in self.db.all_not_done():
-                declar = self.directum.search('ДПУ',
-                                              'ИД=%s' % request.directum_id)
-
-                # For all requests check if declar`s end date is set
-                if declar[0].get('Дата5'):
-                    # Stub class for document info
-                    class Ad(object):
-                        pass
-
-                    applied_docs = []
-                    found = False
-
-                    # Search newest procedure with document bound
-                    # for that declar
-                    procs = self.directum.search(
-                        'ПРОУ', 'Kod2=%s' % request.declar_number,
-                        order_by='Дата4', ascending=False)
-                    for proc in procs:
-                        if proc.get(
-                                'Ведущая аналитика') == request.directum_id:
-                            docs = self.directum.get_bind_docs(
-                                'ПРОУ', proc.get('ИДЗапГлавРазд'))
-                            for doc in docs:
-                                doc_id = doc.get('ID')
-                                ad = Ad()
-                                # Get only last version
-                                versions = self.directum.get_doc_versions(
-                                    doc_id)
-                                data = self.directum.get_doc(
-                                    doc_id, versions[0])
-                                file, file_n = mkstemp()
-                                os.write(file, data)
-                                os.close(file)
-                                ad.file = file_n
-                                ad.date = doc.get('ISBEDocCreateDate')
-                                ad.file_name = doc.get(
-                                    'ID') + '.' + doc.get(
-                                    'Extension').lower()
-                                ad.number = doc.get(
-                                    'Дополнение') if doc.get(
-                                    'Дополнение') else doc.get('NumberEDoc')
-                                ad.title = doc.get('ISBEDocName')
-                                applied_docs.append(ad)
-                            if docs:
-                                found = True
-                                break
-
-                    # Get bound docs from declar if there is no procedures
-                    # with docs bound
-                    if not found:
-                        docs = self.directum.get_bind_docs(
-                            'ДПУ', request.directum_id)
-                        ad = Ad()
-                        for doc in docs:
-                            if doc.get('TKED') in (
-                                    'КИК', 'ИК1', 'ИК2', 'ПСИ'):
-                                if ad.date > doc.get('ISBEDocCreateDate'):
-                                    doc_id = doc.get('ID')
-                                    if ad.file:
-                                        os.remove(ad.file)
-                                    file, file_n = mkstemp()
-                                    ad.file = file_n
-                                    ad.date = doc.get('ISBEDocCreateDate')
-                                    ad.file_name = doc.get(
-                                        'ID') + '.' + doc.get(
-                                        'Extension').lower()
-                                    ad.number = doc.get(
-                                        'Дополнение') if doc.get(
-                                        'Дополнение') else doc.get(
-                                        'NumberEDoc')
-                                    ad.title = doc.get('ISBEDocName')
-                        # Get only last version
-                        versions = self.directum.get_doc_versions(
-                            doc_id)
-                        data = self.directum.get_doc(
-                            doc_id, versions[0])
-                        os.write(ad.file, data)
-                        os.close(ad.file)
-                        applied_docs.append(ad)
-
-                    text = 'Услуга предоставлена'
-                    if declar[0].get('СтатусУслуги'):
-                        state = self.directum.search(
-                            'СОУ', 'Kod=%s' % declar[0].get('СтатусУслуги'))
-                        if state[0].get('Наименование'):
-                            text += '. Статус: %s' % \
-                                    state[0].get('Наименование')
-
-                    self.smev.send_respose(
-                        request.reply_to, request.declar_num,
-                        request.declar_date, text=text,
-                        applied_documents=applied_docs,
-                        ftp_user=self.ftp_user,
-                        ftp_pass=self.ftp_pass)
-                    # self.db.delete(request.uuid)
-                    request.done = True
-                    self.db.commit()
-        except Exception as e:
-            self.report_error()
+    # def step(self):
+    #     """
+    #     Sends GetRequest. Then queries Directum for changed status for stored
+    #     requests and sends SendResponse if status changed
+    #     """
+    #     # Send to DIRECTUM previously saved declars
+    #     try:
+    #         for declar, files, reply_to, uuid in self.db.all_declars_as_xsd():
+    #             res = self.directum.add_declar(declar, files=files)
+    #             self.db.add_update(uuid, declar.declar_number,
+    #                                reply_to, directum_id=res)
+    #             logging.info('Добавлено/обновлено дело с ID = %s' % res)
+    #             self.directum.run_script('СтартЗадачПоМУ')
+    #             self.db.delete_declar(uuid)
+    #     except Exception:
+    #         self.report_error()
+    #
+    #     try:
+    #         declar, uuid, reply_to, files = self.smev.get_request(
+    #             self.smev_uri,
+    #             self.local_name)
+    #         if declar:
+    #             try:
+    #                 res = self.directum.add_declar(declar, files=files)
+    #                 self.db.add_update(uuid, declar.declar_number, reply_to,
+    #                                    directum_id=res)
+    #                 logging.info('Добавлено/обновлено дело с ID = %s' % res)
+    #                 self.directum.run_script('СтартЗадачПоМУ')
+    #             except Exception:
+    #                 logging.warning(
+    #                     'Failed to send data to DIRECTUM. Saving locally.',
+    #                     exc_info=True)
+    #                 self.db.save_declar(declar, uuid, reply_to, files)
+    #     except Exception as e:
+    #         self.report_error()
+    #
+    #     # Send final response
+    #     try:
+    #         for request in self.db.all_not_done():
+    #             declar = self.directum.search('ДПУ',
+    #                                           'ИД=%s' % request.directum_id)
+    #
+    #             # For all requests check if declar`s end date is set
+    #             if declar[0].get('Дата5'):
+    #                 # Stub class for document info
+    #                 class Ad(object):
+    #                     pass
+    #
+    #                 applied_docs = []
+    #                 found = False
+    #
+    #                 # Search newest procedure with document bound
+    #                 # for that declar
+    #                 procs = self.directum.search(
+    #                     'ПРОУ', 'Kod2=%s' % request.declar_number,
+    #                     order_by='Дата4', ascending=False)
+    #                 for proc in procs:
+    #                     if proc.get(
+    #                             'Ведущая аналитика') == request.directum_id:
+    #                         docs = self.directum.get_bind_docs(
+    #                             'ПРОУ', proc.get('ИДЗапГлавРазд'))
+    #                         for doc in docs:
+    #                             doc_id = doc.get('ID')
+    #                             ad = Ad()
+    #                             # Get only last version
+    #                             versions = self.directum.get_doc_versions(
+    #                                 doc_id)
+    #                             data = self.directum.get_doc(
+    #                                 doc_id, versions[0])
+    #                             file, file_n = mkstemp()
+    #                             os.write(file, data)
+    #                             os.close(file)
+    #                             ad.file = file_n
+    #                             ad.date = doc.get('ISBEDocCreateDate')
+    #                             ad.file_name = doc.get(
+    #                                 'ID') + '.' + doc.get(
+    #                                 'Extension').lower()
+    #                             ad.number = doc.get(
+    #                                 'Дополнение') if doc.get(
+    #                                 'Дополнение') else doc.get('NumberEDoc')
+    #                             ad.title = doc.get('ISBEDocName')
+    #                             applied_docs.append(ad)
+    #                         if docs:
+    #                             found = True
+    #                             break
+    #
+    #                 # Get bound docs from declar if there is no procedures
+    #                 # with docs bound
+    #                 if not found:
+    #                     docs = self.directum.get_bind_docs(
+    #                         'ДПУ', request.directum_id)
+    #                     ad = Ad()
+    #                     for doc in docs:
+    #                         if doc.get('TKED') in (
+    #                                 'КИК', 'ИК1', 'ИК2', 'ПСИ'):
+    #                             if ad.date > doc.get('ISBEDocCreateDate'):
+    #                                 doc_id = doc.get('ID')
+    #                                 if ad.file:
+    #                                     os.remove(ad.file)
+    #                                 file, file_n = mkstemp()
+    #                                 ad.file = file_n
+    #                                 ad.date = doc.get('ISBEDocCreateDate')
+    #                                 ad.file_name = doc.get(
+    #                                     'ID') + '.' + doc.get(
+    #                                     'Extension').lower()
+    #                                 ad.number = doc.get(
+    #                                     'Дополнение') if doc.get(
+    #                                     'Дополнение') else doc.get(
+    #                                     'NumberEDoc')
+    #                                 ad.title = doc.get('ISBEDocName')
+    #                     # Get only last version
+    #                     versions = self.directum.get_doc_versions(
+    #                         doc_id)
+    #                     data = self.directum.get_doc(
+    #                         doc_id, versions[0])
+    #                     os.write(ad.file, data)
+    #                     os.close(ad.file)
+    #                     applied_docs.append(ad)
+    #
+    #                 text = 'Услуга предоставлена'
+    #                 if declar[0].get('СтатусУслуги'):
+    #                     state = self.directum.search(
+    #                         'СОУ', 'Kod=%s' % declar[0].get('СтатусУслуги'))
+    #                     if state[0].get('Наименование'):
+    #                         text += '. Статус: %s' % \
+    #                                 state[0].get('Наименование')
+    #
+    #                 self.smev.send_respose(
+    #                     request.reply_to, request.declar_num,
+    #                     request.declar_date, text=text,
+    #                     applied_documents=applied_docs,
+    #                     ftp_user=self.ftp_user,
+    #                     ftp_pass=self.ftp_pass)
+    #                 # self.db.delete(request.uuid)
+    #                 request.done = True
+    #                 self.db.commit()
+    #     except Exception as e:
+    #         self.report_error()
 
     def parse_config(self, config_path):
         """
