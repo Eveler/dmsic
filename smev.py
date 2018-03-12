@@ -3,6 +3,7 @@ import ftplib
 import logging
 import tempfile
 from datetime import datetime, date
+from mimetypes import guess_type
 from os import close, write
 from urllib.parse import urlparse
 from uuid import uuid1
@@ -293,15 +294,16 @@ class Adapter:
         res = node.find('.//{*}SenderProvidedRequestData')
         res.set('Id', 'SIGNED_BY_CALLER')
 
-        if False:
+        if file_names:
             rahl = etree.SubElement(res, 'RefAttachmentHeaderList')
-            for uuid, file in files:
+            for file_name in file_names:
                 rah = etree.SubElement(rahl, 'RefAttachmentHeader')
-                etree.SubElement(rah, 'uuid').text = uuid
+                from os.path import basename
+                etree.SubElement(rah, 'uuid').text = self.__upload_file(
+                    file_name, basename(file_name))
                 etree.SubElement(
-                    rah, 'Hash').text = self.crypto.get_file_hash(
-                    file['full_name'])
-                etree.SubElement(rah, 'MimeType').text = file['type']
+                    rah, 'Hash').text = self.crypto.get_file_hash(file_name)
+                etree.SubElement(rah, 'MimeType').text = guess_type(file_name)
 
         node_str = etree.tostring(node)
         # res = etree.QName(res)
@@ -312,8 +314,8 @@ class Adapter:
         self.log.debug(node_str)
         res = self.__xml_part(node_str,
                               b'ns0:SenderProvidedRequestData')
-        res = self.__call_sign(res)
-        res = node_str.decode().replace('<Signature/>', res)
+        # res = self.__call_sign(res)
+        # res = node_str.decode().replace('<Signature/>', res)
         self.log.debug(res)
 
     def send_respose(self, reply_to, declar_number, register_date,
@@ -321,7 +323,6 @@ class Adapter:
                      ftp_user='', ftp_pass=''):
         files = []
         for doc in applied_documents:
-            from mimetypes import guess_type
             if isinstance(doc, (bytes, str)):
                 file_name = os.path.split(doc)[1]
                 uuid = self.__upload_file(doc, file_name, ftp_user, ftp_pass)
