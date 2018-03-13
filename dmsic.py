@@ -1,9 +1,18 @@
 # -*- encoding: utf-8 -*-
 
+# Author: Savenko Mike
+
 import logging
 import os
-from tempfile import mkstemp
+import smtplib
+from configparser import ConfigParser, NoSectionError, NoOptionError
+from email.mime.text import MIMEText
+from logging.handlers import TimedRotatingFileHandler
+from os.path import expanduser
+from sys import exc_info
+from traceback import format_exception
 
+from qtui import Ui
 # from db import Db
 from smev import Adapter
 
@@ -29,8 +38,9 @@ class Integration:
         self.ui = ui
 
         try:
-            self.__smev = Adapter(self.smev_wsdl, self.smev_ftp,
-                                  method=self.cert_method)
+            self.__smev = Adapter(
+                self.smev_wsdl, self.smev_ftp, method=self.cert_method,
+                serial=self.crt_serial, container=self.container)
         except Exception:
             self.report_error()
 
@@ -40,8 +50,9 @@ class Integration:
     def smev(self):
         if not self.__smev:
             try:
-                self.__smev = Adapter(self.smev_wsdl, self.smev_ftp,
-                                      method=self.cert_method)
+                self.__smev = Adapter(
+                    self.smev_wsdl, self.smev_ftp, method=self.cert_method,
+                    serial=self.crt_serial, container=self.container)
             except Exception:
                 self.report_error()
 
@@ -52,10 +63,7 @@ class Integration:
         self.__smev = value
 
     def send(self, declar):
-        try:
-            self.smev.send_request(declar)
-        except:
-            self.report_error()
+        self.smev.send_request(declar)
 
     # def step(self):
     #     """
@@ -200,15 +208,13 @@ class Integration:
         """
         Read the configuration. If something is missing, write the default one.
         """
-        from configparser import ConfigParser, NoSectionError, NoOptionError
 
         cfg = ConfigParser()
         do_write = False
         # If an exception, report it end exit
         try:
-            from os.path import expanduser
             lst = cfg.read(
-                ["c:/dmsis/dmsic.ini", expanduser("~/dmsic.ini"), "./dmsic.ini",
+                ["c:/dmsic/dmsic.ini", expanduser("~/dmsic.ini"), "./dmsic.ini",
                  config_path])
             if lst:
                 logging.info('Configuration loaded from: %s' % lst)
@@ -220,13 +226,12 @@ class Integration:
             if not cfg.has_section("main"):
                 do_write = True
                 cfg.add_section("main")
-                cfg.set("main", "logfile", "dmsis.log")
+                cfg.set("main", "logfile", "dmsic.log")
                 cfg.set("main", "loglevel", "warning")
                 cfg.set("main", "log_count", "7")
             if not cfg.has_option("main", "logfile"):
                 do_write = True
-                cfg.set("main", "logfile", "dmsis.log")
-            from logging.handlers import TimedRotatingFileHandler
+                cfg.set("main", "logfile", "dmsic.log")
             backupcount = 7
             if "log_count" in cfg.options("main"):
                 backupcount = cfg.get("main", "log_count")
@@ -322,8 +327,6 @@ class Integration:
             raise
 
     def report_error(self):
-        from sys import exc_info
-        from traceback import format_exception
         etype, value, tb = exc_info()
         trace = ''.join(format_exception(etype, value, tb))
         msg = ("*" * 70 + "\n%s\n" + "*" * 70) % trace
@@ -333,8 +336,6 @@ class Integration:
             self.ui.report_error(msg)
 
         if self.mail_server:
-            import smtplib
-            from email.mime.text import MIMEText
             from_addr = 'admin@adm-ussuriisk.ru'
             message = MIMEText(msg)
             message['Subject'] = 'SMEV integration error'
@@ -354,9 +355,8 @@ class Integration:
 
 
 def main():
-    from qtui import Ui
     ui = Ui()
-    ui.exec()
+    ui._exec()
 
 
 if __name__ == '__main__':

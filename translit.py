@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-# Author: Savenko Mike
 
 def translate(name):
     # Заменяем пробелы и преобразуем строку к нижнему регистру
@@ -88,6 +87,8 @@ def translate(name):
         (u"ф", u"f"),
         (u"х", u"h"),
         (u"э", u"e"),
+        ## Символы
+        (u'№', u'N'),
     )
     # перебираем символы в таблице и заменяем
     for symb_in, symb_out in transtable:

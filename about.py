@@ -31,6 +31,6 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "О программе"))
-        self.label.setText(_translate("Dialog", "Программа распрастраняется по личензии GNU GPL v3.\n"
+        self.label.setText(_translate("Dialog", "Программа распрастраняется по лицензии GNU GPL v3.\n"
 "© Савенко М.Ю."))
 

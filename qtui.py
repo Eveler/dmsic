@@ -1,5 +1,11 @@
 # -*- encoding: utf-8 -*-
 
+# Author: Savenko Mike
+
+from logging import error
+from sys import argv, exc_info
+from traceback import format_exception
+
 from PyQt5.Qt import QMainWindow, QMessageBox, QObject, QApplication, \
     QGridLayout, QTableWidget, QScrollArea, QLabel, QLineEdit, QWidget, \
     QPushButton, QHBoxLayout, pyqtSlot, QSizePolicy, QDateEdit, QDate, \
@@ -14,7 +20,6 @@ tr = QObject().tr
 
 class Ui(QApplication):
     def __init__(self):
-        from sys import argv
         super().__init__(argv)
         self.w = QMainWindow()
         self.w.setMinimumWidth(300)
@@ -33,18 +38,15 @@ class Ui(QApplication):
         self.w.showMaximized()
 
     def report_error(self, msg=None):
-        from sys import exc_info
         if not msg:
-            from traceback import format_exception
             etype, value, tb = exc_info()
             trace = ''.join(format_exception(etype, value, tb))
             delim_len = 40
             msg = ("*" * delim_len + "\n%s\n" + "*" * delim_len) % trace
-            from logging import error
             error(msg)
         mb = QMessageBox(QMessageBox.Critical, tr('Ошибка'), str(exc_info()[1]))
         mb.setDetailedText(msg)
-        mb.exec()
+        mb._exec()
 
     def __create_ui(self):
         self.l = QGridLayout()
@@ -173,6 +175,8 @@ class Ui(QApplication):
                 a.append(i)
             declar['legal_entity'] = a
             i.send(declar)
+            mb = QMessageBox(self.w)
+            mb.information(self.w, tr('Готово'), tr('Запрос отправлен'))
         except:
             self.report_error()
 
@@ -181,7 +185,7 @@ class Ui(QApplication):
         a = Ui_Dialog()
         d = QDialog()
         a.setupUi(d)
-        d.exec()
+        d._exec()
 
     def __retranslateUi(self, MainWindow):
         _translate = QCoreApplication.translate

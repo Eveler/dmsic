@@ -1,12 +1,24 @@
 # -*- encoding: utf-8 -*-
+
+# Author: Savenko Mike
+
 import logging
+import os
 from datetime import date, datetime
+from mimetypes import guess_type
+from os import makedirs, path, remove
+from shutil import copy2
+from tempfile import mkstemp
 
 from sqlalchemy import Column, Integer, String, Boolean, Date, ForeignKey, func
 from sqlalchemy.engine import create_engine
 from sqlalchemy.ext.declarative.api import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm.session import sessionmaker
+
+from declar import Address, LegalEntity, Individual, Declar, AppliedDocument
+
+# from encodings.base64_codec import base64_encode
 
 Base = declarative_base()
 
@@ -344,18 +356,14 @@ class Db:
                 self.session.add(ee)
         docs = []
         for adoc in declar.AppliedDocument:
-            from mimetypes import guess_type
             found = files[adoc.file_name]
             mime_type = guess_type(found)[0]
             doc_data = None
             file_path = None
-            from os import path
             if path.getsize(found) > 1000000 - 2048:
                 maxid = self.session.query(func.max(Documents.id)).first() + 1
-                from os import makedirs
                 if not path.exists('storage'):
                     makedirs('storage')
-                from shutil import copy2
                 if maxid > 10000:
                     file_path = path.join('storage', str(maxid)[:-4])
                     if not path.exists(file_path):
@@ -367,7 +375,6 @@ class Db:
             else:
                 with open(found, 'rb') as f:
                     doc_data = f.read()
-                # from encodings.base64_codec import base64_encode
                 # doc_data = base64_encode(doc_data)
             doc = Documents(title=adoc.title, number=adoc.number,
                             date=datetime.strptime(
@@ -400,15 +407,11 @@ class Db:
         return self.session.query(Declars).all()
 
     def all_declars_as_xsd(self):
-        from declar import AppliedDocument, Declar, Address, LegalEntity, \
-            Individual
         declars_info = []
         for declar in self.session.query(Declars).all():
             files = {}
             for doc in declar.documents:
                 if doc.body:
-                    from tempfile import mkstemp
-                    import os
                     fp, file_path = mkstemp()
                     os.close(fp)
                     with open(file_path, 'wb') as f:
@@ -596,7 +599,6 @@ class Db:
             self.session.delete(d.object_address)
             for doc in d.documents:
                 if doc.file_path:
-                    from os import remove
                     remove(doc.file_path)
                 self.session.delete(doc)
             for entity in d.legal_entity:
@@ -623,7 +625,6 @@ if __name__ == '__main__':
     db = Db()
     with open('logo-ussuriisk.png', 'rb') as f:
         data = f.read()
-    from declar import Declar, AppliedDocument
 
     doc = AppliedDocument(title='dsgsfdgs', number='cvgfdg',
                           date=date(2008, 1, 12), url='dfgdsfgs',

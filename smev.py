@@ -1,16 +1,28 @@
 # -*- encoding: utf-8 -*-
+
+# Author: Savenko Mike
+
 import ftplib
+import json
 import logging
+import operator
+import os
+import sys
 import tempfile
 from datetime import datetime, date
-from mimetypes import guess_type
-from os import close, write
+from logging.handlers import TimedRotatingFileHandler
+from mimetypes import guess_type, guess_extension
+from os import close, write, path
+from os.path import basename
 from urllib.parse import urlparse
 from uuid import uuid1
 
+# from datetime import date
+import six
 from declar import Declar
 from lxml import etree, objectify
 from plugins.cryptopro import Crypto
+from translit import translate
 from zeep import Client
 from zeep.plugins import HistoryPlugin
 
@@ -73,13 +85,11 @@ class Adapter:
             res += ' ' * 4 + value + '\n'
 
         res += "\nBindings:\n"
-        import six
         for binding_obj in sorted(self.proxy.wsdl.bindings.values(),
                                   key=lambda k: six.text_type(k)):
             res += ' ' * 4 + six.text_type(binding_obj) + '\n'
 
         res += '\n'
-        import operator
         for service in self.proxy.wsdl.services.values():
             res += six.text_type(service) + '\n'
             for port in service.ports.values():
@@ -163,13 +173,11 @@ class Adapter:
                     files[attach.uuid]['FileName'] = str(attach.FileName)
                 for uuid, file in files.items():
                     file_name = file['FileName']
-                    from os import path
                     fn, ext = path.splitext(file_name)
                     res = self.__load_file(uuid, file['UserName'],
                                            file['Password'],
                                            file['FileName'])
                     if isinstance(res, (str, bytes)):
-                        from mimetypes import guess_extension
                         new_ext = guess_extension(file_name).lower()
                         ext = ext.lower()
                         if ext != new_ext:
@@ -208,13 +216,11 @@ class Adapter:
                     files[attach.uuid]['FileName'] = str(attach.FileName)
                 for uuid, file in files.items():
                     file_name = file['FileName']
-                    from os import path
                     fn, ext = path.splitext(file_name)
                     res = self.__load_file(uuid, file['UserName'],
                                            file['Password'],
                                            file['FileName'])
                     if isinstance(res, (str, bytes)):
-                        from mimetypes import guess_extension
                         new_ext = guess_extension(file_name).lower()
                         ext = ext.lower()
                         if ext != new_ext:
@@ -298,25 +304,28 @@ class Adapter:
             rahl = etree.SubElement(res, 'RefAttachmentHeaderList')
             for file_name in file_names:
                 rah = etree.SubElement(rahl, 'RefAttachmentHeader')
-                from os.path import basename
                 etree.SubElement(rah, 'uuid').text = self.__upload_file(
-                    file_name, basename(file_name))
+                    file_name, translate(basename(file_name)))
                 etree.SubElement(
                     rah, 'Hash').text = self.crypto.get_file_hash(file_name)
-                etree.SubElement(rah, 'MimeType').text = guess_type(file_name)
+                etree.SubElement(
+                    rah, 'MimeType').text = guess_type(file_name)[0]
 
         node_str = etree.tostring(node)
-        # res = etree.QName(res)
-        # node_str = node_str.replace(
-        #     b'<ns0:SenderProvidedResponseData',
-        #     b'<ns0:SenderProvidedResponseData xmlns:ns0="' +
-        #     res.namespace.encode() + b'"')
+        res = etree.QName(res)
+        node_str = node_str.replace(
+            b'<ns0:SenderProvidedRequestData',
+            b'<ns0:SenderProvidedRequestData xmlns:ns0="' +
+            res.namespace.encode() + b'"')
         self.log.debug(node_str)
         res = self.__xml_part(node_str,
                               b'ns0:SenderProvidedRequestData')
-        # res = self.__call_sign(res)
-        # res = node_str.decode().replace('<Signature/>', res)
+        res = self.__call_sign(res)
+        res = node_str.decode().replace('<Signature/>', res)
         self.log.debug(res)
+        res = self.__send(operation, res.encode('utf-8'))
+        self.log.debug(res)
+        return res
 
     def send_respose(self, reply_to, declar_number, register_date,
                      result='FINAL', text='', applied_documents=list(),
@@ -327,13 +336,13 @@ class Adapter:
                 file_name = os.path.split(doc)[1]
                 uuid = self.__upload_file(doc, file_name, ftp_user, ftp_pass)
                 files.append({uuid: {'name': file_name,
-                                     'type': guess_type(doc),
+                                     'type': guess_type(doc)[0],
                                      'full_name': doc}})
             if doc.file:
                 uuid = self.__upload_file(doc.file, doc.file_name, ftp_user,
                                           ftp_pass)
                 files.append({uuid: {'name': doc.file_name,
-                                     'type': guess_type(doc.file),
+                                     'type': guess_type(doc.file)[0],
                                      'full_name': doc.file}})
 
         operation = 'SendResponse'
@@ -428,10 +437,12 @@ class Adapter:
 
     def __upload_file(self, file, file_name, ftp_user='anonymous',
                       ftp_pass='anonymous'):
+        self.log.debug(file_name)
         addr = urlparse(self.ftp_addr).netloc
         with ftplib.FTP(addr, ftp_user, ftp_pass) as con:
             uuid = str(uuid1())
-            con.mkd(uuid)
+            res = con.mkd(uuid)
+            self.log.debug(res)
             con.cwd(uuid)
             with open(file, 'rb') as f:
                 res = con.storbinary('STOR ' + file_name, f)
@@ -504,14 +515,11 @@ if __name__ == '__main__':
     logging.getLogger('zeep.wsdl').setLevel(logging.INFO)
     logging.getLogger('urllib3').setLevel(logging.INFO)
 
-    import sys
 
     if len(sys.argv) < 2:
-        import os
-        from logging.handlers import TimedRotatingFileHandler
 
         handler = TimedRotatingFileHandler(
-            os.path.abspath("dmsis.log"), when='D', backupCount=0,
+            os.path.abspath("dmsic.log"), when='D', backupCount=0,
             encoding='cp1251')
         handler.setFormatter(logging.Formatter(
             '%(asctime)s %(name)s:%(module)s(%(lineno)d): %(levelname)s: '
@@ -542,8 +550,6 @@ if __name__ == '__main__':
                 local_name='declar')
             logging.debug(res)
             if res:
-                import json
-
                 try:
                     with open('declar.json', 'w') as j:
                         json.dump(res, j)
@@ -555,7 +561,6 @@ if __name__ == '__main__':
             logging.error(str(e), exc_info=True)
             # with open('tests/dmsis.log', 'a') as f:
             #     f.write(str(e))
-    # from datetime import date
 
     # doc = AppliedDocument
     # doc.file_name = 'fgfdgfd'

@@ -1,4 +1,7 @@
 # -*- encoding: utf-8 -*-
+
+# Author: Savenko Mike
+
 import logging
 import os
 import subprocess
@@ -76,18 +79,26 @@ class Crypto:
 
     def get_file_hash(self, file_path):
         csptest_path = 'C:\\Program Files (x86)\\Crypto Pro\\CSP\\csptest.exe'
+        if not os.path.exists(csptest_path):
+            csptest_path = 'C:\\Program Files\\Crypto Pro\\CSP\\csptest.exe'
         hashtmp_f, hashtmp_fn = tempfile.mkstemp()
         os.close(hashtmp_f)
-        args = [csptest_path, 'csptest.exe', '-silent', '-keyset', '-hash',
+        args = [csptest_path, 'csptest.exe', '-keyset', '-hash',
                 'GOST', '-container', self.__container, '-keytype', 'exchange',
                 '-in', os.path.abspath(file_path), '-hashout', hashtmp_fn]
-        out = subprocess.check_output(args, stderr=subprocess.STDOUT)
-        self.log.debug(out.decode(encoding='cp866'))
+        try:
+            out = subprocess.check_output(args, stderr=subprocess.STDOUT)
+            self.log.debug(out.decode(encoding='cp866'))
 
-        with open(hashtmp_fn, 'rb') as f:
-            hsh = f.read()
-        hsh_bytes = base64_encode(hsh)[0][:-1].decode().replace('\n', '')
-        return hsh_bytes
+            with open(hashtmp_fn, 'rb') as f:
+                hsh = f.read()
+            os.remove(hashtmp_fn)
+            hsh_bytes = base64_encode(hsh)[0][:-1].decode().replace('\n', '')
+            return hsh_bytes
+        except:
+            os.remove(hashtmp_fn)
+            self.log.error(out.decode(encoding='cp866'))
+            raise
 
     # TODO: Enveloped signature
     def sign_csp(self, xml):
