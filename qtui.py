@@ -13,7 +13,6 @@ from PyQt5.Qt import QMainWindow, QMessageBox, QObject, QApplication, \
     QCoreApplication, QMenuBar, QMenu, QStatusBar, QAction, QDialog, QFileDialog
 
 from about import Ui_Dialog
-from dmsic import Integration
 
 tr = QObject().tr
 
@@ -46,7 +45,7 @@ class Ui(QApplication):
             error(msg)
         mb = QMessageBox(QMessageBox.Critical, tr('Ошибка'), str(exc_info()[1]))
         mb.setDetailedText(msg)
-        mb._exec()
+        mb.exec()
 
     def __create_ui(self):
         self.l = QGridLayout()
@@ -138,6 +137,7 @@ class Ui(QApplication):
     @pyqtSlot(bool)
     def send(self):
         try:
+            from dmsic import Integration
             i = Integration(self)
             declar = {}
             for k, v in self.__wgts.items():
@@ -185,7 +185,7 @@ class Ui(QApplication):
         a = Ui_Dialog()
         d = QDialog()
         a.setupUi(d)
-        d._exec()
+        d.exec()
 
     def __retranslateUi(self, MainWindow):
         _translate = QCoreApplication.translate

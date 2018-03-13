@@ -356,7 +356,7 @@ class Integration:
 
 def main():
     ui = Ui()
-    ui._exec()
+    ui.exec()
 
 
 if __name__ == '__main__':
