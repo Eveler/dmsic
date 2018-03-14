@@ -97,7 +97,8 @@ class Crypto:
             return hsh_bytes
         except:
             os.remove(hashtmp_fn)
-            self.log.error(out.decode(encoding='cp866'))
+            if 'out' in locals():
+                self.log.error(out.decode(encoding='cp866'))
             raise
 
     # TODO: Enveloped signature
