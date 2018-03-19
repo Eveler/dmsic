@@ -256,6 +256,25 @@ class Adapter:
 
         return declar, uuid, reply_to, files
 
+    def __add_element(self, parent, ns, elem, data):
+        if not data:
+            return
+        if isinstance(data, dict):
+            se = etree.SubElement(parent, '{%s}%s' % (ns, elem))
+            for k, v in data.items():
+                if not v:
+                    continue
+                self.__add_element(se, ns, k, v)
+        elif isinstance(data, (list, tuple)):
+            for v in data:
+                if not isinstance(v, (dict, list, tuple)):
+                    etree.SubElement(parent, '{%s}%s' % (ns, elem)).text = v
+                else:
+                    se = etree.SubElement(parent, '{%s}%s' % (ns, elem))
+                    self.__add_element(se, ns, elem, v)
+        else:
+            etree.SubElement(parent, '{%s}%s' % (ns, elem)).text = data
+
     def send_request(self, declar):
         operation = 'SendRequest'
         file_names = []
@@ -264,6 +283,7 @@ class Adapter:
         rr = etree.Element(
             '{urn://augo/smev/uslugi/1.0.0}declar',
             nsmap={'rr': 'urn://augo/smev/uslugi/1.0.0'})
+        self.log.debug(declar)
         for k, v in declar.items():
             if isinstance(v, list):
                 for val in v:
@@ -275,22 +295,28 @@ class Adapter:
                         if n == 'file_name':
                             file_names.append(m)
                         else:
-                            etree.SubElement(
-                                se,
-                                '{urn://augo/smev/uslugi/1.0.0}%s' % n).text = m
+                            # etree.SubElement(
+                            #     se,
+                            #     '{urn://augo/smev/uslugi/1.0.0}%s' % n).text = m
+                            self.__add_element(
+                                se, 'urn://augo/smev/uslugi/1.0.0', n, m)
             elif isinstance(v, dict):
                 se = etree.SubElement(
                     rr, '{urn://augo/smev/uslugi/1.0.0}%s' % k)
                 for n, m in v.items():
                     if not m:
                         continue
-                    etree.SubElement(
-                        se, '{urn://augo/smev/uslugi/1.0.0}%s' % n).text = m
+                    # etree.SubElement(
+                    #     se, '{urn://augo/smev/uslugi/1.0.0}%s' % n).text = m
+                    self.__add_element(
+                        se, 'urn://augo/smev/uslugi/1.0.0', n, m)
             else:
                 if not v:
                     continue
-                etree.SubElement(
-                    rr, '{urn://augo/smev/uslugi/1.0.0}%s' % k).text = v
+                # etree.SubElement(
+                #     rr, '{urn://augo/smev/uslugi/1.0.0}%s' % k).text = v
+                self.__add_element(
+                    rr, 'urn://augo/smev/uslugi/1.0.0', k, v)
         mpc = element(rr)
 
         node = self.proxy.create_message(
@@ -515,9 +541,7 @@ if __name__ == '__main__':
     logging.getLogger('zeep.wsdl').setLevel(logging.INFO)
     logging.getLogger('urllib3').setLevel(logging.INFO)
 
-
     if len(sys.argv) < 2:
-
         handler = TimedRotatingFileHandler(
             os.path.abspath("dmsic.log"), when='D', backupCount=0,
             encoding='cp1251')

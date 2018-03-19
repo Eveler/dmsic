@@ -162,17 +162,29 @@ class Ui(QApplication):
             declar['AppliedDocument'] = a
             a = declar['person'] if 'person' in declar else []
             for v in self.individuals:
-                i = {}
+                ind = {}
                 for key, val in v.items():
-                    i[key] = val.text()
-                a.append(i)
+                    if key in ('address', 'fact_address'):
+                        adr = {}
+                        for k, vl in val.items():
+                            adr[k] = vl.text()
+                        ind[key] = adr
+                    else:
+                        ind[key] = val.text()
+                a.append(ind)
             declar['person'] = a
             a = declar['legal_entity'] if 'legal_entity' in declar else []
             for v in self.entities:
-                i = {}
+                ent = {}
                 for key, val in v.items():
-                    i[key] = val.text()
-                a.append(i)
+                    if key == 'address':
+                        adr = {}
+                        for k, vl in val.items():
+                            adr[k] = vl.text()
+                        ent[key] = adr
+                    else:
+                        ent[key] = val.text()
+                a.append(ent)
             declar['legal_entity'] = a
             i.send(declar)
             mb = QMessageBox(self.w)
@@ -265,13 +277,17 @@ class Ui(QApplication):
         self.gridLayout.addWidget(gb, self.gridLayout.rowCount() + 1, 0, 1, 2)
         self.documents.append(doc)
 
+        gb = QGroupBox(tr('Заявители *'))
+        self.dec_layout = QGridLayout()
         self.cb = QComboBox()
         self.cb.addItems(('Физическое лицо',
                           'Юридическое лицо/Индивидуальный предприниматель'))
-        self.gridLayout.addWidget(self.cb)
+        self.dec_layout.addWidget(self.cb)
         b = QPushButton(tr('Добавить'))
         b.clicked.connect(self.add_declarant)
-        self.gridLayout.addWidget(b)
+        self.dec_layout.addWidget(b, 0, 1, 1, 1)
+        gb.setLayout(self.dec_layout)
+        self.gridLayout.addWidget(gb, self.gridLayout.rowCount() + 1, 0, 1, 2)
 
         b = QPushButton(tr('Добавить файл документа'))
         b.clicked.connect(self.__add_doc_file)
@@ -373,10 +389,10 @@ class Ui(QApplication):
     @pyqtSlot(bool)
     def add_declarant(self, var=True, gl=None):
         if not gl:
-            gl = self.gridLayout
+            gl = self.dec_layout
         dc = {}
         gb_l = QGridLayout()
-        if self.cb.currentIndex() == 0 or gl != self.gridLayout:
+        if self.cb.currentIndex() == 0 or gl != self.dec_layout:
             # Add Individual
             gb = QGroupBox(tr('Физическое лицо *'))
             gb_l.addWidget(QLabel(tr('Фамилия <em style="color: red">*</em>')))
@@ -399,7 +415,7 @@ class Ui(QApplication):
             gb_l.addWidget(adr, gb_l.rowCount() + 1, 0, 1, 2)
 
             gb.setLayout(gb_l)
-            self.gridLayout.addWidget(gb, gl.rowCount() + 1, 0, 1, 2)
+            gl.addWidget(gb, gl.rowCount() + 1, 0, 1, 2)
             self.individuals.append(dc)
         else:
             # Add LegalEntity
@@ -418,5 +434,5 @@ class Ui(QApplication):
             gb_l.addWidget(adr, gb_l.rowCount() + 1, 0, 1, 2)
 
             gb.setLayout(gb_l)
-            self.gridLayout.addWidget(gb, gl.rowCount() + 1, 0, 1, 2)
+            gl.addWidget(gb, gl.rowCount() + 1, 0, 1, 2)
             self.entities.append(dc)
