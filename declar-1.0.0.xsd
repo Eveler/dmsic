@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2011 rel. 2 (http://www.altova.com) by TeaM DJiNN (TeaM DJiNN) -->
+<!-- edited with XMLSpy v2008 sp1 (http://www.altova.com) by Savenko (AUGO) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" xmlns:ns1="urn://augo/smev/uslugi/1.0.0" targetNamespace="urn://augo/smev/uslugi/1.0.0" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
 	<xs:element name="declar">
 		<xs:annotation>
@@ -61,12 +61,12 @@
 					<xs:complexType>
 						<xs:simpleContent>
 							<xs:extension base="xs:string">
-								<xs:attribute name="type" use="required" type="xs:string">
+								<xs:attribute name="type" type="xs:string" use="required">
 									<xs:annotation>
 										<xs:documentation>тип значения параметра: Boolean или Integer или Double или Date или DateTime или String</xs:documentation>
 									</xs:annotation>
 								</xs:attribute>
-								<xs:attribute name="id" use="required" type="xs:string">
+								<xs:attribute name="id" type="xs:string" use="required">
 									<xs:annotation>
 										<xs:documentation>внутренний идентификатор параметра (только цифры и латинсуие символы, начинается с символа)</xs:documentation>
 									</xs:annotation>
@@ -76,12 +76,12 @@
 										<xs:documentation>читаемое человеком наименование параметра</xs:documentation>
 									</xs:annotation>
 								</xs:attribute>
-								<xs:attribute name="rowNumber" type="xs:string">
+								<xs:attribute name="rowNumber" type="xs:int">
 									<xs:annotation>
 										<xs:documentation>если значение параметра - массив, количество строк массива</xs:documentation>
 									</xs:annotation>
 								</xs:attribute>
-								<xs:attribute name="colNumber" type="xs:string">
+								<xs:attribute name="colNumber" type="xs:int">
 									<xs:annotation>
 										<xs:documentation>если значение параметра - массив, количество столбцов массива</xs:documentation>
 									</xs:annotation>
@@ -276,7 +276,7 @@
 					<xs:documentation>Имя файла документа</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="url" type="xs:string">
+			<xs:element name="url" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Прямая ссылка на файл. Поддерживаются только пртоколы HTTP, FTP</xs:documentation>
 				</xs:annotation>
