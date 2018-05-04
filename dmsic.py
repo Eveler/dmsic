@@ -40,7 +40,8 @@ class Integration:
         try:
             self.__smev = Adapter(
                 self.smev_wsdl, self.smev_ftp, method=self.cert_method,
-                serial=self.crt_serial, container=self.container)
+                serial=self.crt_serial, container=self.container,
+                crt_name=self.crt_name)
         except Exception:
             self.report_error()
 
@@ -52,7 +53,8 @@ class Integration:
             try:
                 self.__smev = Adapter(
                     self.smev_wsdl, self.smev_ftp, method=self.cert_method,
-                    serial=self.crt_serial, container=self.container)
+                    serial=self.crt_serial, container=self.container,
+                    crt_name=self.crt_name)
             except Exception:
                 self.report_error()
 
@@ -234,7 +236,7 @@ class Integration:
                 cfg.set("main", "logfile", "dmsic.log")
             backupcount = 7
             if "log_count" in cfg.options("main"):
-                backupcount = cfg.get("main", "log_count")
+                backupcount = int(cfg.get("main", "log_count"))
             else:
                 do_write = True
                 cfg.set("main", "log_count", "7")
@@ -299,6 +301,11 @@ class Integration:
             else:
                 raise Exception('Ошибка в настройках: необходимо указать '
                                 'container в секции smev')
+            if 'crt_name' in cfg.options('smev'):
+                self.crt_name = cfg.get('smev', 'crt_name')
+            else:
+                raise Exception('Ошибка в настройках: необходимо указать '
+                                'crt_name в секции smev')
             if 'ftp_user' in cfg.options('smev'):
                 self.ftp_user = cfg.get('smev', 'ftp_user')
             else:

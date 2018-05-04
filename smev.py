@@ -52,12 +52,14 @@ class Adapter:
     def __init__(self,
                  wsdl="http://smev3-d.test.gosuslugi.ru:7500/smev/v1.2/ws?wsdl",
                  ftp_addr="ftp://smev3-d.test.gosuslugi.ru/",
-                 history=False, method='sharp', serial=None, container=None):
+                 history=False, method='sharp', serial=None, container=None,
+                 crt_name=None):
         self.log = logging.getLogger('smev.adapter')
         self.log.setLevel(logging.root.level)
         self.ftp_addr = ftp_addr
         self.crypto = Crypto()
         self.crypto.serial = serial
+        self.crypto.crt_name = crt_name
         self.crypto.container = container
         self.method = method
 
@@ -327,15 +329,21 @@ class Adapter:
         res.set('Id', 'SIGNED_BY_CALLER')
 
         if file_names:
-            rahl = etree.SubElement(res, 'RefAttachmentHeaderList')
+            ns = etree.QName(node.find('.//{*}MessagePrimaryContent')).namespace
+            rahl = etree.SubElement(res, '{%s}RefAttachmentHeaderList' % ns)
             for file_name in file_names:
-                rah = etree.SubElement(rahl, 'RefAttachmentHeader')
-                etree.SubElement(rah, 'uuid').text = self.__upload_file(
+                rah = etree.SubElement(rahl, '{%s}RefAttachmentHeader' % ns)
+                etree.SubElement(
+                    rah, '{%s}uuid' % ns).text = self.__upload_file(
                     file_name, translate(basename(file_name)))
+                f_hash = self.crypto.get_file_hash(file_name)
+                etree.SubElement(rah, '{%s}Hash' % ns).text = f_hash
                 etree.SubElement(
-                    rah, 'Hash').text = self.crypto.get_file_hash(file_name)
-                etree.SubElement(
-                    rah, 'MimeType').text = guess_type(file_name)[0]
+                    rah, '{%s}MimeType' % ns).text = guess_type(file_name)[0]
+                # etree.SubElement(
+                #     rah,
+                #     '{%s}SignaturePKCS7' % ns).text = self.crypto.get_file_sign(
+                #     file_name)
 
         node_str = etree.tostring(node)
         res = etree.QName(res)
@@ -431,14 +439,19 @@ class Adapter:
         res.set('Id', 'SIGNED_BY_CALLER')
 
         if files:
-            rahl = etree.SubElement(res, 'RefAttachmentHeaderList')
+            ns = etree.QName(node.find('.//{*}MessagePrimaryContent')).namespace
+            rahl = etree.SubElement(res, '{%s}RefAttachmentHeaderList' % ns)
             for uuid, file in files:
-                rah = etree.SubElement(rahl, 'RefAttachmentHeader')
-                etree.SubElement(rah, 'uuid').text = uuid
+                rah = etree.SubElement(rahl, '{%s}RefAttachmentHeader' % ns)
+                etree.SubElement(rah, '{%s}uuid' % ns).text = uuid
                 etree.SubElement(
-                    rah, 'Hash').text = self.crypto.get_file_hash(
+                    rah, '{%s}Hash' % ns).text = self.crypto.get_file_hash(
                     file['full_name'])
-                etree.SubElement(rah, 'MimeType').text = file['type']
+                etree.SubElement(rah, '{%s}MimeType' % ns).text = file['type']
+                # etree.SubElement(
+                #     rah,
+                #     '{%s}SignaturePKCS7' % ns).text = self.crypto.get_file_sign(
+                #     file['full_name'])
 
         node_str = etree.tostring(node)
         res = etree.QName(res)
