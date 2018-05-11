@@ -276,7 +276,8 @@ class Integration:
             if 'local_name' in cfg.options('smev'):
                 self.local_name = cfg.get('smev', 'local_name')
             else:
-                self.local_name = 'directum'
+                # self.local_name = 'directum'
+                self.local_name = 'declar'
             if 'wsdl' not in cfg.options('smev'):
                 do_write = True
                 cfg.set(
