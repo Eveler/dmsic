@@ -17,9 +17,8 @@ from os.path import basename
 from urllib.parse import urlparse
 from uuid import uuid1
 
-# from datetime import date
 import six
-from declar import Declar
+from declar import Declar, AppliedDocument, LegalEntity, Address, Individual
 from lxml import etree, objectify
 from plugins.cryptopro import Crypto
 from translit import translate
@@ -258,27 +257,65 @@ class Adapter:
 
         return declar, uuid, reply_to, files
 
-    def __add_element(self, parent, ns, elem, data):
+    def __add_element(self, parent, ns, elem, data, file_names=list()):
         if not data:
             return
-        if isinstance(data, dict):
-            se = etree.SubElement(parent, '{%s}%s' % (ns, elem))
-            for k, v in data.items():
-                if not v:
-                    continue
-                self.__add_element(se, ns, k, v)
-        elif isinstance(data, (list, tuple)):
-            for v in data:
-                if not isinstance(v, (dict, list, tuple)):
-                    etree.SubElement(parent, '{%s}%s' % (ns, elem)).text = v
-                else:
-                    se = etree.SubElement(parent, '{%s}%s' % (ns, elem))
-                    self.__add_element(se, ns, elem, v)
-        elif isinstance(data, (date, datetime)):
-            etree.SubElement(parent, '{%s}%s' % (ns, elem)).text = \
-                data.strftime('%Y-%m-%d')
+        se = etree.SubElement(parent, '{%s}%s' % (ns, elem))
+        if elem == 'AppliedDocument':
+            for item in (
+                    'title', 'number', 'date', 'valid_until', 'file_name',
+                    'url', 'url_valid_until'):
+                if item in data and data[item]:
+                    if item == 'file_name':
+                        file_names.append(item)
+                    self.__add_element(se, ns, item, data[item], file_names)
+        elif elem == 'legal_entity':
+            for item in (
+                    'name', 'full_name', 'inn', 'kpp', 'address', 'ogrn',
+                    'taxRegDoc', 'govRegDoc', 'govRegDate', 'phone', 'email',
+                    'bossFio', 'buhFio', 'bank', 'bankAccount', 'lastCtrlDate',
+                    'opf', 'govRegOgv', 'person'):
+                if item in data and data[item]:
+                    self.__add_element(se, ns, item, data[item], file_names)
+        elif 'address' in elem:
+            for item in (
+                    'Postal_Code', 'Region', 'District', 'City',
+                    'Urban_District', 'Soviet_Village', 'Locality', 'Street',
+                    'House', 'Housing', 'Building', 'Apartment',
+                    'Reference_point'):
+                if item in data and data[item]:
+                    self.__add_element(se, ns, item, data[item], file_names)
+        elif elem in ('person', 'confidant'):
+            for item in (
+                    'surname', 'first_name', 'patronymic', 'address',
+                    'fact_address', 'email', 'birthdate', 'passport_serial',
+                    'passport_number', 'passport_agency', 'passport_date',
+                    'phone', 'inn', 'sex', 'snils'):
+                if item in data and data[item]:
+                    self.__add_element(se, ns, item, data[item], file_names)
         else:
-            etree.SubElement(parent, '{%s}%s' % (ns, elem)).text = data
+            if isinstance(data, (date, datetime)):
+                se.text = data.strftime('%Y-%m-%d')
+            else:
+                se.text = data
+        # if isinstance(data, dict):
+        #     se = etree.SubElement(parent, '{%s}%s' % (ns, elem))
+        #     for k, v in data.items():
+        #         if not v:
+        #             continue
+        #         self.__add_element(se, ns, k, v)
+        # elif isinstance(data, (list, tuple)):
+        #     for v in data:
+        #         if not isinstance(v, (dict, list, tuple)):
+        #             etree.SubElement(parent, '{%s}%s' % (ns, elem)).text = v
+        #         else:
+        #             se = etree.SubElement(parent, '{%s}%s' % (ns, elem))
+        #             self.__add_element(se, ns, elem, v)
+        # elif isinstance(data, (date, datetime)):
+        #     etree.SubElement(parent, '{%s}%s' % (ns, elem)).text = \
+        #         data.strftime('%Y-%m-%d')
+        # else:
+        #     etree.SubElement(parent, '{%s}%s' % (ns, elem)).text = data
 
     def send_request(self, declar):
         operation = 'SendRequest'
@@ -289,39 +326,40 @@ class Adapter:
             '{urn://augo/smev/uslugi/1.0.0}declar',
             nsmap={'ns1': 'urn://augo/smev/uslugi/1.0.0'})
         self.log.debug(declar)
-        for k, v in declar.items():
-            if isinstance(v, list):
-                for val in v:
-                    se = etree.SubElement(
-                        rr, '{urn://augo/smev/uslugi/1.0.0}%s' % k)
-                    for n, m in val.items():
-                        if not m:
-                            continue
-                        if n == 'file_name':
-                            file_names.append(m)
-                        else:
-                            # etree.SubElement(
-                            #     se,
-                            #     '{urn://augo/smev/uslugi/1.0.0}%s' % n).text = m
-                            self.__add_element(
-                                se, 'urn://augo/smev/uslugi/1.0.0', n, m)
-            elif isinstance(v, dict):
-                se = etree.SubElement(
-                    rr, '{urn://augo/smev/uslugi/1.0.0}%s' % k)
-                for n, m in v.items():
-                    if not m:
-                        continue
-                    # etree.SubElement(
-                    #     se, '{urn://augo/smev/uslugi/1.0.0}%s' % n).text = m
-                    self.__add_element(
-                        se, 'urn://augo/smev/uslugi/1.0.0', n, m)
-            else:
-                if not v:
-                    continue
-                # etree.SubElement(
-                #     rr, '{urn://augo/smev/uslugi/1.0.0}%s' % k).text = v
+        for item in (
+                'declar_number', 'service', 'register_date', 'end_date',
+                'object_address', 'AppliedDocument', 'legal_entity', 'person',
+                'confidant', 'Param'):
+            if item in declar and declar[item]:
                 self.__add_element(
-                    rr, 'urn://augo/smev/uslugi/1.0.0', k, v)
+                    rr, 'urn://augo/smev/uslugi/1.0.0', item, declar[item],
+                    file_names)
+        # for k, v in declar.items():
+        #     if isinstance(v, list):
+        #         for val in v:
+        #             se = etree.SubElement(
+        #                 rr, '{urn://augo/smev/uslugi/1.0.0}%s' % k)
+        #             for n, m in val.items():
+        #                 if not m:
+        #                     continue
+        #                 if n == 'file_name':
+        #                     file_names.append(m)
+        #                 else:
+        #                     self.__add_element(
+        #                         se, 'urn://augo/smev/uslugi/1.0.0', n, m)
+        #     elif isinstance(v, dict):
+        #         se = etree.SubElement(
+        #             rr, '{urn://augo/smev/uslugi/1.0.0}%s' % k)
+        #         for n, m in v.items():
+        #             if not m:
+        #                 continue
+        #             self.__add_element(
+        #                 se, 'urn://augo/smev/uslugi/1.0.0', n, m)
+        #     else:
+        #         if not v:
+        #             continue
+        #         self.__add_element(
+        #             rr, 'urn://augo/smev/uslugi/1.0.0', k, v)
         mpc = element(rr)
 
         node = self.proxy.create_message(
@@ -364,9 +402,9 @@ class Adapter:
         self.log.debug(res)
         return res
 
-    def send_respose(self, reply_to, declar_number, register_date,
-                     result='FINAL', text='', applied_documents=list(),
-                     ftp_user='', ftp_pass=''):
+    def send_response(self, reply_to, declar_number, register_date,
+                      result='FINAL', text='', applied_documents=list(),
+                      ftp_user='', ftp_pass=''):
         files = []
         for doc in applied_documents:
             if isinstance(doc, (bytes, str)):
@@ -578,7 +616,7 @@ if __name__ == '__main__':
                                   gen_xml_only=True))
     else:
         try:
-            res = a.send_respose(
+            res = a.send_response(
                 reply_to='eyJzaWQiOjMyNzg1LCJtaWQiOiIwOTlmNjlkMy1lYmE2LTExZTctYTIyZS1hNDVkMzZjNzcwNmYiLCJ0Y2QiOiJmMDIxM2E4My1lYmE1LTExZTctOTc4NC1mYTE2M2UxMDA3Yjl8MTExMTExMTExMTExMTExMTExMTF8VjhoUXFvLzlYMVBDckJkV010RHQ2UlUyNGdQdEdZQzlPTjlEM2d4TWQzZGdWK1ErUFo3L2o3SUJKMG5WY1BBNnZ5T1ZrczRuNHl5ZWhEQytFclYydkRSYXBVKzJMcWJtNmNHQlVGR0lRbyt2Kzl3TnpnMVlFOFI5Tnh6MmNxWmlFTzN3TUNYQlplbXNJaUVUajlNNm5JKzVaOHU4VXNnTFpyb1NoMkN1WlR3L244MS9wYU00cFMxcXlXaWE3TWRYUUJLN1gwcUpwcG80VGl0cnJOcFFqR3phUXNPUFFDSThIT3Vnc2o1QmRSNUUveTdIM1ZwZUlhQ1ZjTG5LeEtQbm5hQllyandGYzRrQUZVcW1zM3JTWjdaWitXeWNCQlpZOTZOS0hpbE10eVNYQW9PeE1Qa1dsQXA1b1hScDhhQXNoRzNIQitOV0lsVm9CRFpiaW1MTnZBPT0iLCJyaWQiOiJkMGFjYmY2Yy0xNDMzLTExZTUtOWFkZi00YWIyM2QwN2NlMzkiLCJlb2wiOjAsInNsYyI6ImF1Z29fc21ldl91c2x1Z2lfMS4wLjBfZGVjbGFyIiwibW5tIjoibXRfdGVzdCJ9',
                 declar_number='23156/564/5611Д',
                 register_date='2008-09-29',
