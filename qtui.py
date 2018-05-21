@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 # Author: Savenko Mike
-
+from datetime import datetime
 from logging import error
 from sys import argv, exc_info
 from traceback import format_exception
@@ -146,15 +146,24 @@ class Ui(QApplication):
                         'person'):
                     a = {}
                     for key, val in v.items():
-                        a[key] = val.text()
+                        if val.metaObject().className() == 'QDateEdit':
+                            a[key] = datetime.strptime(val.text(), '%d.%m.%Y')
+                        else:
+                            a[key] = val.text()
                     declar[k] = a
                 else:
-                    declar[k] = v.text()
+                    if v.metaObject().className() == 'QDateEdit':
+                        declar[k] = datetime.strptime(v.text(), '%d.%m.%Y')
+                    else:
+                        declar[k] = v.text()
             a = declar['AppliedDocument'] if 'AppliedDocument' in declar else []
             for v in self.documents:
                 d = {}
                 for key, val in v.items():
-                    d[key] = val.text()
+                    if val.metaObject().className() == 'QDateEdit':
+                        d[key] = datetime.strptime(val.text(), '%d.%m.%Y')
+                    else:
+                        d[key] = val.text()
                 if not self.doc_files:
                     raise Exception('Добавте файл документа')
                 d['file_name'] = self.doc_files[self.documents.index(v)]
@@ -170,7 +179,10 @@ class Ui(QApplication):
                             adr[k] = vl.text()
                         ind[key] = adr
                     else:
-                        ind[key] = val.text()
+                        if val.metaObject().className() == 'QDateEdit':
+                            ind[key] = datetime.strptime(val.text(), '%d.%m.%Y')
+                        else:
+                            ind[key] = val.text()
                 a.append(ind)
             declar['person'] = a
             a = declar['legal_entity'] if 'legal_entity' in declar else []
@@ -183,7 +195,10 @@ class Ui(QApplication):
                             adr[k] = vl.text()
                         ent[key] = adr
                     else:
-                        ent[key] = val.text()
+                        if val.metaObject().className() == 'QDateEdit':
+                            ent[key] = datetime.strptime(val.text(), '%d.%m.%Y')
+                        else:
+                            ent[key] = val.text()
                 a.append(ent)
             declar['legal_entity'] = a
             i.send(declar)
