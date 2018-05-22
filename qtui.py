@@ -233,6 +233,7 @@ class Ui(QApplication):
             QLabel(tr('№ дела (обращения) <em style="color: red">*</em>')))
         w = QLineEdit()
         self.gridLayout.addWidget(w)
+        w.setFocus()
         self.__wgts['declar_number'] = w
         self.gridLayout.addWidget(
             QLabel(tr('Код (номер) услуги <em style="color: red">*</em>')))

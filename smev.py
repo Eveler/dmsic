@@ -262,21 +262,52 @@ class Adapter:
             return
         se = etree.SubElement(parent, '{%s}%s' % (ns, elem))
         if elem == 'AppliedDocument':
-            for item in (
-                    'title', 'number', 'date', 'valid_until', 'file_name',
-                    'url', 'url_valid_until'):
-                if item in data and data[item]:
-                    if item == 'file_name':
-                        file_names.append(item)
-                    self.__add_element(se, ns, item, data[item], file_names)
+            if isinstance(data, list):
+                for itm in data:
+                    for item in (
+                            'title', 'number', 'date', 'valid_until', 'file_name',
+                            'url', 'url_valid_until'):
+                        if item in itm and itm[item]:
+                            if item == 'file_name':
+                                fn = itm[item]
+                                file_names.append(fn)
+                                self.__add_element(
+                                    se, ns, item, path.basename(fn), file_names)
+                            else:
+                                self.__add_element(
+                                    se, ns, item, itm[item], file_names)
+                    if data.index(itm) < len(data) - 1:
+                        se = etree.SubElement(parent, '{%s}%s' % (ns, elem))
+            else:
+                for item in (
+                        'title', 'number', 'date', 'valid_until', 'file_name',
+                        'url', 'url_valid_until'):
+                    if item in data and data[item]:
+                        if item == 'file_name':
+                            file_names.append(item)
+                        self.__add_element(se, ns, item, data[item], file_names)
         elif elem == 'legal_entity':
-            for item in (
-                    'name', 'full_name', 'inn', 'kpp', 'address', 'ogrn',
-                    'taxRegDoc', 'govRegDoc', 'govRegDate', 'phone', 'email',
-                    'bossFio', 'buhFio', 'bank', 'bankAccount', 'lastCtrlDate',
-                    'opf', 'govRegOgv', 'person'):
-                if item in data and data[item]:
-                    self.__add_element(se, ns, item, data[item], file_names)
+            if isinstance(data, list):
+                for itm in data:
+                    for item in (
+                            'name', 'full_name', 'inn', 'kpp', 'address',
+                            'ogrn', 'taxRegDoc', 'govRegDoc', 'govRegDate',
+                            'phone', 'email', 'bossFio', 'buhFio', 'bank',
+                            'bankAccount', 'lastCtrlDate', 'opf', 'govRegOgv',
+                            'person'):
+                        if item in itm and itm[item]:
+                            self.__add_element(
+                                se, ns, item, itm[item], file_names)
+                    if data.index(itm) < len(data) - 1:
+                        se = etree.SubElement(parent, '{%s}%s' % (ns, elem))
+            else:
+                for item in (
+                        'name', 'full_name', 'inn', 'kpp', 'address', 'ogrn',
+                        'taxRegDoc', 'govRegDoc', 'govRegDate', 'phone', 'email',
+                        'bossFio', 'buhFio', 'bank', 'bankAccount', 'lastCtrlDate',
+                        'opf', 'govRegOgv', 'person'):
+                    if item in data and data[item]:
+                        self.__add_element(se, ns, item, data[item], file_names)
         elif 'address' in elem:
             for item in (
                     'Postal_Code', 'Region', 'District', 'City',
@@ -286,13 +317,27 @@ class Adapter:
                 if item in data and data[item]:
                     self.__add_element(se, ns, item, data[item], file_names)
         elif elem in ('person', 'confidant'):
-            for item in (
-                    'surname', 'first_name', 'patronymic', 'address',
-                    'fact_address', 'email', 'birthdate', 'passport_serial',
-                    'passport_number', 'passport_agency', 'passport_date',
-                    'phone', 'inn', 'sex', 'snils'):
-                if item in data and data[item]:
-                    self.__add_element(se, ns, item, data[item], file_names)
+            if isinstance(data, list):
+                for itm in data:
+                    for item in (
+                            'surname', 'first_name', 'patronymic', 'address',
+                            'fact_address', 'email', 'birthdate',
+                            'passport_serial', 'passport_number',
+                            'passport_agency', 'passport_date',
+                            'phone', 'inn', 'sex', 'snils'):
+                        if item in itm and itm[item]:
+                            self.__add_element(
+                                se, ns, item, itm[item], file_names)
+                    if data.index(itm) < len(data) - 1:
+                        se = etree.SubElement(parent, '{%s}%s' % (ns, elem))
+            else:
+                for item in (
+                        'surname', 'first_name', 'patronymic', 'address',
+                        'fact_address', 'email', 'birthdate', 'passport_serial',
+                        'passport_number', 'passport_agency', 'passport_date',
+                        'phone', 'inn', 'sex', 'snils'):
+                    if item in data and data[item]:
+                        self.__add_element(se, ns, item, data[item], file_names)
         else:
             if isinstance(data, (date, datetime)):
                 se.text = data.strftime('%Y-%m-%d')
