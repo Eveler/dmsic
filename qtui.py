@@ -236,7 +236,7 @@ class Ui(QApplication):
         w.setFocus()
         self.__wgts['declar_number'] = w
         self.gridLayout.addWidget(
-            QLabel(tr('Код (номер) услуги <em style="color: red">*</em>')))
+            QLabel(tr('Услуга (код или номер, или наименование)<em style="color: red">*</em>')))
         w = QLineEdit()
         self.gridLayout.addWidget(w)
         self.__wgts['service'] = w
