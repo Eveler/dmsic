@@ -265,8 +265,8 @@ class Adapter:
             if isinstance(data, list):
                 for itm in data:
                     for item in (
-                            'title', 'number', 'date', 'valid_until', 'file_name',
-                            'url', 'url_valid_until'):
+                            'title', 'number', 'date', 'valid_until',
+                            'file_name', 'url', 'url_valid_until'):
                         if item in itm and itm[item]:
                             if item == 'file_name':
                                 fn = itm[item]
@@ -303,17 +303,17 @@ class Adapter:
             else:
                 for item in (
                         'name', 'full_name', 'inn', 'kpp', 'address', 'ogrn',
-                        'taxRegDoc', 'govRegDoc', 'govRegDate', 'phone', 'email',
-                        'bossFio', 'buhFio', 'bank', 'bankAccount', 'lastCtrlDate',
-                        'opf', 'govRegOgv', 'person'):
+                        'taxRegDoc', 'govRegDoc', 'govRegDate', 'phone',
+                        'email', 'bossFio', 'buhFio', 'bank', 'bankAccount',
+                        'lastCtrlDate', 'opf', 'govRegOgv', 'person'):
                     if item in data and data[item]:
                         self.__add_element(se, ns, item, data[item], file_names)
         elif 'address' in elem:
             for item in (
                     'Postal_Code', 'Region', 'District', 'City',
                     'Urban_District', 'Soviet_Village', 'Locality', 'Street',
-                    'House', 'Housing', 'Building', 'Apartment',
-                    'Reference_point'):
+                    'House', 'Reference_point', 'Housing', 'Building',
+                    'Apartment'):
                 if item in data and data[item]:
                     self.__add_element(se, ns, item, data[item], file_names)
         elif elem in ('person', 'confidant'):
