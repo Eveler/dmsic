@@ -191,6 +191,11 @@ class RequestResponse(xsd.ComplexType):
         instance.result = result
         return instance
 
+    def __str__(self):
+        return "Номер дела: %s\nДата регистрации: %s\nРезультат: %s\n" \
+               "Ответ: %s" % (self.declar_number, self.register_date,
+                              self.result, self.text)
+
 
 class Declar(xsd.ComplexType):
     INHERITANCE = None

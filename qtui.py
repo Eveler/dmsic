@@ -89,30 +89,13 @@ class Ui(QApplication):
         self.gridLayout = QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout.setObjectName("gridLayout")
         self.__show_form()
-        # self.pushButton = QPushButton(self.scrollAreaWidgetContents)
-        # self.pushButton.clicked.connect(self.__show_form)
-        # self.pushButton.setObjectName("pushButton")
-        # self.gridLayout.addWidget(self.pushButton, 2, 1, 1, 1)
-        # spacerItem = QSpacerItem(40, 20, QSizePolicy.Expanding,
-        #                          QSizePolicy.Minimum)
-        # self.gridLayout.addItem(spacerItem, 2, 0, 1, 1)
-        # self.tableWidget = QTableWidget(self.scrollAreaWidgetContents)
-        # self.tableWidget.setColumnCount(3)
-        # self.tableWidget.setObjectName("tableWidget")
-        # self.tableWidget.setHorizontalHeaderLabels(
-        #     ('№ дела (обращения)', 'Дата приёма', 'Дата отправки в СМЭВ'))
-        # self.tableWidget.resizeColumnsToContents()
-        # self.gridLayout.addWidget(self.tableWidget, 0, 0, 1, 2)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.horizontalLayout.addWidget(self.scrollArea)
         mainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(mainWindow)
-        # self.menubar.setGeometry(QtCore.QRect(0, 0, 600, 21))
         self.menubar.setObjectName("menubar")
         self.menu = QMenu(self.menubar)
         self.menu.setObjectName("menu")
-        # self.menu_2 = QMenu(self.menubar)
-        # self.menu_2.setObjectName("menu_2")
         mainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(mainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -125,14 +108,28 @@ class Ui(QApplication):
         self.action.triggered.connect(self.on_action_triggered)
         self.action_2 = QAction(mainWindow)
         self.action_2.setObjectName("action_2")
+        self.action_3 = QAction(mainWindow)
+        self.action_3.setObjectName("action_3")
+        self.action_3.triggered.connect(self.get_response)
         self.menu.addAction(self.action)
-        # self.menubar.addAction(self.menu_2.menuAction())
         self.menubar.addAction(self.action_1)
         self.menubar.addAction(self.action_2)
+        self.menubar.addAction(self.action_3)
         self.menubar.addAction(self.menu.menuAction())
 
         self.__retranslateUi(mainWindow)
         QMetaObject.connectSlotsByName(mainWindow)
+
+    @pyqtSlot(bool)
+    def get_response(self):
+        try:
+            from dmsic import Integration
+            i = Integration(self)
+            res = i.get_response()[0]
+            if res:
+                QMessageBox.information(self.w, tr("Получен ответ"), str(res))
+        except:
+            self.report_error()
 
     @pyqtSlot(bool)
     def send(self):
@@ -223,6 +220,7 @@ class Ui(QApplication):
         self.action_1.setText(_translate("MainWindow", "Отправить"))
         self.action_2.setText(_translate("MainWindow", "Настройка"))
         self.action.setText(_translate("MainWindow", "О программе"))
+        self.action_3.setText(_translate("MainWindow", "Получить ответ"))
 
     @pyqtSlot(bool)
     def __show_form(self):

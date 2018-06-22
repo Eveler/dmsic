@@ -18,7 +18,8 @@ from urllib.parse import urlparse
 from uuid import uuid1
 
 import six
-from declar import Declar, AppliedDocument, LegalEntity, Address, Individual
+from declar import Declar, AppliedDocument, LegalEntity, Address, Individual, \
+    RequestResponse
 from lxml import etree, objectify
 from plugins.cryptopro import Crypto
 from translit import translate
@@ -256,6 +257,96 @@ class Adapter:
             self.log.debug(res)
 
         return declar, uuid, reply_to, files
+
+    def get_response(self, uri="", local_name="", node_id=None,
+                    gen_xml_only=False):
+        operation = 'GetResponse'
+        timestamp = datetime.now()
+        node = self.proxy.create_message(
+            self.proxy.service, operation,
+            {'NamespaceURI': uri, 'RootElementLocalName': local_name,
+             'Timestamp': timestamp, 'NodeID': node_id},
+            CallerInformationSystemSignature=etree.Element('Signature'))
+        node[0][0][0].set('Id', 'SIGNED_BY_CALLER')
+        node_str = etree.tostring(node)
+        self.log.debug(node_str)
+
+        res = self.__call_sign(
+            self.__xml_part(node_str, b'ns1:MessageTypeSelector'))
+
+        res = node_str.decode().replace('<Signature/>', res)
+        if gen_xml_only:
+            return res
+
+        res = self.__send(operation, res)
+        self.log.debug(type(res))
+        self.log.debug(res)
+
+        request, uuid, reply_to, files = None, None, None, {}
+
+        if hasattr(res, 'Response') \
+                and hasattr(res.Response, 'SenderProvidedResponseData'):
+            request = res.Response.SenderProvidedResponseData
+            if hasattr(res.Response.SenderProvidedResponseData,
+                            'MessagePrimaryContent') \
+                and res.Response.SenderProvidedResponseData.MessagePrimaryContent:
+                # request = RequestResponse.parsexml(
+                #     etree.tostring(
+                #         res.Response.SenderProvidedResponseData.MessagePrimaryContent._value_1))
+                res1 = RequestResponse.parsexml(
+                    etree.tostring(
+                        res.Response.SenderProvidedResponseData.MessagePrimaryContent._value_1))
+                request.MessagePrimaryContent._value_1 = str(res1)
+            if hasattr(res.Response, 'FSAttachmentsList') \
+                    and res.Response.FSAttachmentsList:
+                attach_head_list = res.Response.SenderProvidedResponseData.RefAttachmentHeaderList
+                for head in attach_head_list:
+                    files[head.uuid] = {'MimeType': head.MimeType}
+                attach_list = res.Response.FSAttachmentsList
+                for attach in attach_list:
+                    files[attach.uuid]['UserName'] = str(attach.UserName)
+                    files[attach.uuid]['Password'] = str(attach.Password)
+                    files[attach.uuid]['FileName'] = str(attach.FileName)
+                for uuid, file in files.items():
+                    file_name = file['FileName']
+                    fn, ext = path.splitext(file_name)
+                    res = self.__load_file(uuid, file['UserName'],
+                                           file['Password'],
+                                           file['FileName'])
+                    if isinstance(res, (str, bytes)):
+                        new_ext = guess_extension(file_name).lower()
+                        ext = ext.lower()
+                        if ext != new_ext:
+                            file_name = fn + new_ext
+                    else:
+                        res, e = res
+                        file_name = fn + '.txt'
+                    files[file_name] = res
+
+            uuid = res.Response.SenderProvidedResponseData.MessageID
+            reply_to = res.Response.SenderProvidedResponseData.To
+
+        if uuid:
+            operation = 'Ack'
+            tm = etree.Element('AckTargetMessage', Id='SIGNED_BY_CALLER',
+                               accepted='true')
+            tm.text = uuid
+            node = self.proxy.create_message(
+                self.proxy.service, operation, tm,
+                CallerInformationSystemSignature=etree.Element('Signature'))
+            res = node.find('.//{*}AckTargetMessage')
+            res.set('Id', 'SIGNED_BY_CALLER')
+            res.set('accepted', 'true')
+            res.text = uuid
+            node_str = etree.tostring(node)
+            self.log.debug(node_str)
+            res = self.__xml_part(node_str, b'ns1:AckTargetMessage')
+            res = self.__call_sign(res)
+            res = node_str.decode().replace('<Signature/>', res)
+            res = self.__send(operation, res)
+            self.log.debug(res)
+
+        return request, uuid, reply_to, files
 
     def __add_element(self, parent, ns, elem, data, file_names=list()):
         if not data:
