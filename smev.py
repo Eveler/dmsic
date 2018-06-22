@@ -431,6 +431,10 @@ class Adapter:
                 #     '{%s}SignaturePKCS7' % ns).text = self.crypto.get_file_sign(
                 #     file_name)
 
+        # Mark request as test request
+        ns = etree.QName(node.find('.//{*}SenderProvidedRequestData')).namespace
+        etree.SubElement(res, '{%s}TestMessage' % ns)
+
         node_str = etree.tostring(node)
         res = etree.QName(res)
         node_str = node_str.replace(
